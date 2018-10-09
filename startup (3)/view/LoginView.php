@@ -1,6 +1,9 @@
 <?php
 
+namespace view;
+
 class LoginView {
+
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
 	private static $name = 'LoginView::UserName';
@@ -69,8 +72,30 @@ class LoginView {
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
+	public function getRequestUserName() {
+		if(isset($_POST[self::$name]))
+		{
+			return $_POST[self::$name];
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	public function getRequestPassword() {
+		if(isset($_POST[self::$password]))
+		{
+			return $_POST[self::$password];
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	public function getLoginAction() {
+		return isset($_POST[self::$login]);
 	}
 	
 }
