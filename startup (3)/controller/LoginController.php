@@ -23,7 +23,11 @@ class LoginController {
             $this->loginView->validateUserLogin($this->loginUser->isUserLoggedIn());
             // $this->layoutView->setIsLoggedIn($this->session->hasSession());
         }
-        
-    
+    }
+
+    public function logoutUser() {
+        echo "1";
+        echo "2";
+        $this->session->destroySession();
     }
 }

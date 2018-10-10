@@ -21,4 +21,8 @@ class Session {
             return true;
         }
     }
+    public function destroySession() {
+        unset($_SESSION['username']);
+        session_destroy();
+    }
 }

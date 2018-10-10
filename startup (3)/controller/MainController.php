@@ -15,6 +15,8 @@ class MainController {
     public function validateUserAction() {
         if($this->loginView->getLoginAction()) {
             $this->loginController->loginUser();
+        } else if($this->loginView->getLogoutAction()) {
+            $this->loginController->logoutUser();
         }
     }
 }

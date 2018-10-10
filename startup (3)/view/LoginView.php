@@ -96,6 +96,10 @@ class LoginView {
 		return isset($_POST[self::$login]);
 	}
 	
+	public function getLogoutAction() {
+		return isset($_POST[self::$logout]);
+	}
+
 	public function validateUserLogin($isUserLoggedIn) {
 		if($isUserLoggedIn) {
 			$this->message = "Welcome";
