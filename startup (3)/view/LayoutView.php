@@ -7,10 +7,12 @@ class LayoutView {
   private $loginView;
   private $dtv;
   private $isLoggedIn;
+  private $session;
   
-  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv) {
+  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv, \model\Session $s) {
     $this->loginView = $lv;
     $this->serverTime = $dtv;
+    $this->session = $s;
 
   }
   
@@ -36,7 +38,7 @@ class LayoutView {
   }
   
   private function renderIsLoggedIn() {
-    if ($this->isLoggedIn) {
+    if ($this->session->hasSession()) {
       return '<h2>Logged in</h2>';
     }
     else {
@@ -45,13 +47,14 @@ class LayoutView {
   }
 
   private function renderLoginPage() {
-    if($this->isLoggedIn) {
+    if($this->session->hasSession()) {
       return $this->loginView->renderLoginView();
     } else {
+      var_dump($this->session->hasSession());
       return $this->loginView->response();
     }
   }
-  public function setIsLoggedIn($isUserLoggedIn) {
-    $this->isLoggedIn = $isUserLoggedIn;
-  }
+  // public function setIsLoggedIn($isUserLoggedIn) {
+  //   $this->isLoggedIn = $isUserLoggedIn;
+  // }
 }

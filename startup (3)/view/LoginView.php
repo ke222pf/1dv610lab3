@@ -17,7 +17,6 @@ class LoginView {
 
 	private $message = '';
 
-
 	public function response() {
 		$response = $this->generateLoginFormHTML();
 		return $response;
@@ -55,7 +54,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $this->message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $this->getRequestUserName() .'" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -101,7 +100,7 @@ class LoginView {
 		if($isUserLoggedIn) {
 			$this->message = "Welcome";
 		} else {
-			$this->message = "";
+			$this->message = "Wrong name or password";
 		}
 	}
 }

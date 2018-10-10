@@ -10,7 +10,6 @@ class ConnectToDb {
         $username = "karl";
         $password = "password";
         try {
-            echo "success";
             return new \PDO("mysql:host=$servername;dbname=$dbName;", $username, $password);
             }
         catch(PDOException $e)

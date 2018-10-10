@@ -7,9 +7,11 @@ private $name;
 private $password;
 private $connectToDb;
 private $checkUser;
+private $session;
 
-public function __construct(\model\ConnectToDb $ctdb) {
+public function __construct(\model\ConnectToDb $ctdb, \model\Session $s) {
     $this->connectToDb = $ctdb;
+    $this->session = $s;
 }
 
     public function getCredentials($name, $password) {
@@ -25,7 +27,7 @@ public function __construct(\model\ConnectToDb $ctdb) {
         $getUsername->execute();
         $matchUser = $getUsername->fetch();
         if($matchUser && $this->password == $matchUser['password']) {
-            echo "logged in";
+            $this->session->getSessionName($this->name);
             $this->checkUser = true;
         } else {
             $this->checkUser = false;
