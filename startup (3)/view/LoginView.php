@@ -8,9 +8,11 @@ class LoginView {
 	private static $logout = 'LoginView::Logout';
 	private static $name = 'LoginView::UserName';
 	private static $password = 'LoginView::Password';
+
 	private static $cookieName = 'LoginView::CookieName';
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
+
 	private static $messageId = 'LoginView::Message';
 
 	private $message = '';
@@ -18,10 +20,14 @@ class LoginView {
 
 	public function response() {
 		$response = $this->generateLoginFormHTML();
-		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 	}
-
+	
+	public function renderLoginView() {
+		
+		$response = $this->generateLogoutButtonHTML();
+		return $response;
+	}
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -91,4 +97,11 @@ class LoginView {
 		return isset($_POST[self::$login]);
 	}
 	
+	public function validateUserLogin($isUserLoggedIn) {
+		if($isUserLoggedIn) {
+			$this->message = "Welcome";
+		} else {
+			$this->message = "";
+		}
+	}
 }

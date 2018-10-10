@@ -18,11 +18,11 @@ $ctdb = new \model\ConnectToDb();
 $lu = new \model\LoginUser($ctdb);
 $v = new \view\LoginView();
 $dtv = new \view\DateTimeView();
-$lv = new \view\LayoutView();
-$lc = new \controller\LoginController($v, $lu);
+$lv = new \view\LayoutView($v, $dtv);
+$lc = new \controller\LoginController($v, $lu, $lv);
 // $rc = new \controller\RegisterController();
 $mc = new \controller\MainController($v, $lc);
 
 $mc->validateUserAction();
-$lv->render(false, $v, $dtv);
+$lv->render(false);
 

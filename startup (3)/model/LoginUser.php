@@ -18,7 +18,7 @@ public function __construct(\model\ConnectToDb $ctdb) {
     }
 
     // SOURCE:  https://www.youtube.com/watch?v=bjT5PJn0Mu8
-    public function match() {
+    public function matchLogin() {
         $getConnection = $this->connectToDb->createConnection();
         $getUsername = $getConnection->prepare('SELECT id, name, password FROM users WHERE name=:name');
         $getUsername->bindParam(':name', $this->name);
