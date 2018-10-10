@@ -13,19 +13,11 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	
+	private $message = '';
 
-	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return  void BUT writes to standard output and cookies!
-	 */
+
 	public function response() {
-		$message = '';
-		
-		$response = $this->generateLoginFormHTML($message);
+		$response = $this->generateLoginFormHTML();
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 	}
@@ -35,10 +27,10 @@ class LoginView {
 	* @param $message, String output message
 	* @return  void, BUT writes to standard output!
 	*/
-	private function generateLogoutButtonHTML($message) {
+	private function generateLogoutButtonHTML() {
 		return '
 			<form  method="post" >
-				<p id="' . self::$messageId . '">' . $message .'</p>
+				<p id="' . self::$messageId . '">' . $this->message .'</p>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
 		';
@@ -49,12 +41,12 @@ class LoginView {
 	* @param $message, String output message
 	* @return  void, BUT writes to standard output!
 	*/
-	private function generateLoginFormHTML($message) {
+	private function generateLoginFormHTML() {
 		return '
 			<form method="post" > 
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
-					<p id="' . self::$messageId . '">' . $message . '</p>
+					<p id="' . self::$messageId . '">' . $this->message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
@@ -71,26 +63,27 @@ class LoginView {
 		';
 	}
 	
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	public function getRequestUserName() {
-		if(isset($_POST[self::$name]))
+		if(!empty($_POST[self::$name]))
 		{
 			return $_POST[self::$name];
 		}
 		else
 		{
-			return "";
+			$this->message = "Username is missing";
+			return false;
 		}
 	}
 
 	public function getRequestPassword() {
-		if(isset($_POST[self::$password]))
+		if(!empty($_POST[self::$password]))
 		{
 			return $_POST[self::$password];
 		}
 		else
 		{
-			return "";
+			$this->message = "Password is missing";
+			return false;
 		}
 	}
 
