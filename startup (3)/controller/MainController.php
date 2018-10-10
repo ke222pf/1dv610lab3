@@ -21,7 +21,7 @@ class MainController {
         }
          if($this->loginView->getKeepLoggedInAction()) {
             $this->loginView->setCookie();
-            $this->loginController->loginWithCookie();
+            $this->loginController->loginWithCookies();
         }
     }
 }

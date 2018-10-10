@@ -29,6 +29,6 @@ class LoginController {
     }
 
     public function loginWithCookies() {
-        $this->loginUser->getCredentials($this->loginUser->getCookieName(), $this->loginUser->getCookiePassword());
+        $this->loginUser->getCredentials($this->loginView->getCookieName(), $this->loginView->getCookiePassword());
     }
 }
