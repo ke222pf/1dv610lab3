@@ -21,13 +21,14 @@ class LoginController {
             $this->loginUser->getCredentials($this->loginView->getRequestUserName(), $this->loginView->getRequestPassword());
             $this->loginUser->matchLogin();
             $this->loginView->validateUserLogin($this->loginUser->isUserLoggedIn());
-            // $this->layoutView->setIsLoggedIn($this->session->hasSession());
         }
     }
 
     public function logoutUser() {
-        echo "1";
-        echo "2";
         $this->session->destroySession();
+    }
+
+    public function loginWithCookies() {
+        $this->loginUser->getCredentials($this->loginUser->getCookieName(), $this->loginUser->getCookiePassword());
     }
 }

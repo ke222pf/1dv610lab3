@@ -69,27 +69,34 @@ class LoginView {
 	}
 	
 	public function getRequestUserName() {
-		if(!empty($_POST[self::$name]))
-		{
+		if(!empty($_POST[self::$name])) {
 			return $_POST[self::$name];
-		}
-		else
-		{
+		} else {
 			$this->message = "Username is missing";
 			return false;
 		}
 	}
 
 	public function getRequestPassword() {
-		if(!empty($_POST[self::$password]))
-		{
+		if(!empty($_POST[self::$password])) {
 			return $_POST[self::$password];
-		}
-		else
-		{
+		} else {
 			$this->message = "Password is missing";
 			return false;
 		}
+	}
+
+	public function setCookie() {
+		setcookie(self::$cookieName, $this->getRequestUserName(), time() + (86400 * 30), "/"); // 86400 = 1 day
+		setcookie(self::$cookiePassword, $this->getRequestPassword(), time() + (86400 * 30), "/"); // 86400 = 1 day
+	}
+
+	public function getCookieName() {
+		return isset($_POST[self::$cookieName]);
+	}
+
+	public function getCookiePassword() {
+		return isset($_POST[self::$cookiePassword]);
 	}
 
 	public function getLoginAction() {
@@ -98,6 +105,14 @@ class LoginView {
 	
 	public function getLogoutAction() {
 		return isset($_POST[self::$logout]);
+	}
+
+	public function getKeepLoggedInAction() {
+		return isset($_POST[self::$keep]);
+	}
+
+	public function logoutMessage() {
+		$this->message = "Bye bye!";
 	}
 
 	public function validateUserLogin($isUserLoggedIn) {

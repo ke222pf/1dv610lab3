@@ -42,35 +42,26 @@ class RegisterView {
 	public function getRequestRegUserName() {
 		//RETURN REQUEST VARIABLE: USERNAME
 		
-		if(isset($_POST[self::$registerName]))
-		{
+		if(isset($_POST[self::$registerName])) {
 			return $_POST[self::$registerName];
-		}
-		else
-		{
+		} else {
 			return "";
 		}
     }
 
 	public function getRequestRegPassword() {
-		if(isset($_POST[self::$registerPassword]))
-		{
+		if(isset($_POST[self::$registerPassword])) {
 			return $_POST[self::$registerPassword];
-		}
-		else
-		{
+		} else {
 			return "";
 		}
     }
 
     public function getRequestRegPasswordConformation() {
 		$passwordConf = self::$registerPasswordRepeat;
-		if(isset($_POST[$passwordConf]))
-		{
+		if(isset($_POST[$passwordConf])) {
 			return $_POST[$passwordConf];
-		}
-		else
-		{
+		} else {
 			return "";
 		}
     }

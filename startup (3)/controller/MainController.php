@@ -17,6 +17,11 @@ class MainController {
             $this->loginController->loginUser();
         } else if($this->loginView->getLogoutAction()) {
             $this->loginController->logoutUser();
+            $this->loginView->logoutMessage();
+        }
+         if($this->loginView->getKeepLoggedInAction()) {
+            $this->loginView->setCookie();
+            $this->loginController->loginWithCookie();
         }
     }
 }

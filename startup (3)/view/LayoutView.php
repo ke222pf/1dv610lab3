@@ -54,7 +54,4 @@ class LayoutView {
       return $this->loginView->response();
     }
   }
-  // public function setIsLoggedIn($isUserLoggedIn) {
-  //   $this->isLoggedIn = $isUserLoggedIn;
-  // }
 }
