@@ -10,10 +10,14 @@ class RegisterView {
     private static $registerPasswordRepeat = 'RegisterView::PasswordRepeat';
     private static $registerUser = 'RegisterView::DoRegistration';
 
-    private $RegMessage = '';
+    private $regMessage = '';
 
 	public function __construct() {
 
+	}
+	public function renderRegisterView() {
+		$response = $this->generateRegisterFormHTML();
+		return $response;
 	}
 
     private function generateRegisterFormHTML () {
@@ -21,7 +25,7 @@ class RegisterView {
 		<form method="post">
         <fieldset>
 					<legend>Register a new user - Write username and password</legend>
-					<p id="' . self::$registerMessageId . '">' . $this->Regmessage . '</p>
+					<p id="' . self::$registerMessageId . '">' . $this->regMessage . '</p>
 					
 					<label for="' . self::$registerName . '">Username :</label>
 					<input type="text" size="20"  name="' . self::$registerName . '" value="" id="' . self::$registerName . '" />
@@ -64,5 +68,8 @@ class RegisterView {
 		} else {
 			return "";
 		}
-    }
+	}
+	public function getRegisterUserAction () {
+		return isset($_POST[self::$registerUser]);
+	}
 }

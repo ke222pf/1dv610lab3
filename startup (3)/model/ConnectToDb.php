@@ -9,6 +9,10 @@ class ConnectToDb {
         $dbName = "lab3";
         $username = "karl";
         $password = "password";
+        // $servername = "localhost";
+        // $dbName = "id7092621_lab2";
+        // $username = "id7092621_karl";
+        // $password = "123123";
         try {
             return new \PDO("mysql:host=$servername;dbname=$dbName;", $username, $password);
             }

@@ -6,7 +6,7 @@ class loginUser {
 private $name;
 private $password;
 private $connectToDb;
-private $checkUser;
+private $checkUser = null;
 private $session;
 
 public function __construct(\model\ConnectToDb $ctdb, \model\Session $s) {

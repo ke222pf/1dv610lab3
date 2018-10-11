@@ -6,22 +6,37 @@ class MainController {
 
     private $loginView;
     private $loginController;
+    private $session;
+    private $registerView;
 
-    public function __construct (\view\LoginView $v, \controller\LoginController $lc) {
+    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv) {
         $this->loginView = $v;
         $this->loginController = $lc;
+        $this->session = $s;
+        $this->registerView = $rv;
     }
     
     public function validateUserAction() {
-        if($this->loginView->getLoginAction()) {
-            $this->loginController->loginUser();
-        } else if($this->loginView->getLogoutAction()) {
+        if(!$this->session->hasSession()) {
+            if($this->loginView->getCookieName() && $this->loginView->getCookiePassword()) {
+                $this->loginController->loginWithCookies();
+                // $this->loginView->displayWelcomeBackMessage();
+            }
+            if($this->loginView->getKeepLoggedInAction()) {
+                $this->loginView->setCookie();
+                $this->loginController->loginUser();
+            } 
+            if($this->loginView->getLoginAction()) {
+                $this->loginController->loginUser();
+            } 
+        }
+        if($this->loginView->getLogoutAction()) {
             $this->loginController->logoutUser();
-            $this->loginView->logoutMessage();
+            // $this->loginView->logoutMessage();
         }
-         if($this->loginView->getKeepLoggedInAction()) {
-            $this->loginView->setCookie();
-            $this->loginController->loginWithCookies();
+        if($this->registerView->getRegisterUserAction()) {
+            
         }
+    
     }
 }

@@ -20,7 +20,8 @@ class LoginController {
         if($this->loginView->getRequestUserName() && $this->loginView->getRequestPassword()) {
             $this->loginUser->getCredentials($this->loginView->getRequestUserName(), $this->loginView->getRequestPassword());
             $this->loginUser->matchLogin();
-            $this->loginView->validateUserLogin($this->loginUser->isUserLoggedIn());
+            $this->loginView->validateLogin($this->loginUser->isUserLoggedIn());
+            // $this->loginView->validateUserLogin($this->loginUser->isUserLoggedIn());
         }
     }
 

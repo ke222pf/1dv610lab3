@@ -16,14 +16,29 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 
 	private $message = '';
+	private $isUserLoggedIn;
 
-	public function response() {
+	public function response($isUserLogin) {
+		if(!$this->isUserLoggedIn && !empty($_POST[self::$name]) && !empty($_POST[self::$password])) {
+			$this->message = "Wrong name or password";
+		} else if(!$isUserLogin && $this->getLogoutAction()) {
+			$this->message = "Bye bye!";
+		}
 		$response = $this->generateLoginFormHTML();
 		return $response;
 	}
 	
-	public function renderLoginView() {
-		
+	public function renderLoginView($hasSession) {
+		// $this->message = '';
+		// if($hasSession) {
+		// 	$this->message = "";
+		if($this->getCookieName() && $this->getCookiePassword()) {
+			$this->message = "Welcome back with cookie";
+		} else if ($this->isUserLoggedIn && isset($_POST[self::$keep])) {
+			$this->message = "Welcome and you will be remembered";
+		} else if($this->isUserLoggedIn) {
+			$this->message = "Welcome";
+		}
 		$response = $this->generateLogoutButtonHTML();
 		return $response;
 	}
@@ -92,11 +107,11 @@ class LoginView {
 	}
 
 	public function getCookieName() {
-		return isset($_POST[self::$cookieName]);
+		return isset($_COOKIE[self::$cookieName]);
 	}
 
 	public function getCookiePassword() {
-		return isset($_POST[self::$cookiePassword]);
+		return isset($_COOKIE[self::$cookiePassword]);
 	}
 
 	public function getLoginAction() {
@@ -111,15 +126,7 @@ class LoginView {
 		return isset($_POST[self::$keep]);
 	}
 
-	public function logoutMessage() {
-		$this->message = "Bye bye!";
-	}
-
-	public function validateUserLogin($isUserLoggedIn) {
-		if($isUserLoggedIn) {
-			$this->message = "Welcome";
-		} else {
-			$this->message = "Wrong name or password";
-		}
+	public function validateLogin($isUserLoggedIn) {
+		$this->isUserLoggedIn = $isUserLoggedIn;
 	}
 }
