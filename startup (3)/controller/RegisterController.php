@@ -1,6 +1,7 @@
 <?php
 
 namespace controller;
+use Exception;
 
 class RegisterController {
 
@@ -13,9 +14,13 @@ class RegisterController {
     }
 
     public function registerUser() {
-        if($this->registerView->getRequestRegUserName() && $this->registerView->getRequestRegPassword()) {
-            $this->registerUserDb->getUserCredentials($this->registerView->getRequestRegUserName(), $this->registerView->getRequestRegPassword());
-            $this->registerUserDb->setUpUserToDb();
+        try {
+            if($this->registerView->getRequestRegUserName() && $this->registerView->getRequestRegPassword() && $this->registerView->matchPasswords()) {
+                $this->registerUserDb->getUserCredentials($this->registerView->getRequestRegUserName(), $this->registerView->getRequestRegPassword());
+                $this->registerUserDb->setUpUserToDb();
+            }
+        } catch(Exception $e) {
+            $this->registerView->validateRegCredentials($e->getMessage());
         }
     }
 }

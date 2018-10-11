@@ -1,7 +1,7 @@
 <?php
 
 namespace view;
-
+use Exception;
 class RegisterView {
 
     private static $registerMessageId = 'RegisterView::Message';
@@ -10,11 +10,13 @@ class RegisterView {
     private static $registerPasswordRepeat = 'RegisterView::PasswordRepeat';
     private static $registerUser = 'RegisterView::DoRegistration';
 
-    private $regMessage = '';
+	private $regMessage = '';
+	
+	const REGUSERNAME_MISSING = "Username has too few characters, at least 3 characters.";
+	const REGPASSWORD_MISSING = "Password has too few characters, at least 6 characters.";
+	const MATCH_PASSWORDS = "Passwords do not match.";
 
-	public function __construct() {
 
-	}
 	public function renderRegisterView() {
 		$response = $this->generateRegisterFormHTML();
 		return $response;
@@ -44,30 +46,40 @@ class RegisterView {
 
 
 	public function getRequestRegUserName() {
-		if(isset($_POST[self::$registerName])) {
+		if(!empty($_POST[self::$registerName])) {
 			return $_POST[self::$registerName];
 		} else {
-			return "";
+			throw new \Exception(self::REGUSERNAME_MISSING);
 		}
     }
 
 	public function getRequestRegPassword() {
-		if(isset($_POST[self::$registerPassword])) {
+		if(!empty($_POST[self::$registerPassword])) {
 			return $_POST[self::$registerPassword];
 		} else {
-			return "";
+			throw new \Exception(self::REGPASSWORD_MISSING);
 		}
     }
 
     public function getRequestRegPasswordConformation() {
 		$passwordConf = self::$registerPasswordRepeat;
-		if(isset($_POST[$passwordConf])) {
+		if(!empty($_POST[$passwordConf])) {
 			return $_POST[$passwordConf];
 		} else {
 			return "";
 		}
 	}
+
+	public function matchPasswords() {
+		if($this->getRequestRegPassword() != $this->getRequestRegPasswordConformation()) {
+			throw new \Exception(self::MATCH_PASSWORDS);
+		}
+	}
+
 	public function getRegisterUserAction () {
 		return isset($_POST[self::$registerUser]);
+	}
+	public function validateRegCredentials($getMessage) {
+		$this->regMessage = $getMessage;
 	}
 }

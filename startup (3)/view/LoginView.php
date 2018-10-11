@@ -89,8 +89,6 @@ class LoginView {
 			return $_POST[self::$name];
 		} else {
 			throw new \Exception(self::USERNAME_MISSING);
-			// $this->message = "Username is missing";
-			// return false;
 		}
 	}
 
@@ -99,8 +97,6 @@ class LoginView {
 			return $_POST[self::$password];
 		} else {
 			throw new \Exception(self::PASSWORD_MISSING);
-			// $this->message = "Password is missing";
-			// return false;
 		}
 	}
 
