@@ -21,5 +21,13 @@ class RegisterUserToDb {
         $connect = $this->connectToDb->createConnection();
         $mySql = "INSERT INTO users(name, password) VALUES (:name, :password)";
         $setUpUser = $connect->prepare($mySql);
+        $hash = password_hash($this->password, PASSWORD_BCRYPT);
+        $setUpUser->bindParam(':name', $this->name);
+        $setUpUser->bindParam(':password', $hash);
+        if($setUpUser->execute()) {
+            $this->checkRegister = true;
+        } else {
+            $this->checkRegister = false;
+        }
     }
 }

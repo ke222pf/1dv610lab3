@@ -44,8 +44,6 @@ class RegisterView {
 
 
 	public function getRequestRegUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
-		
 		if(isset($_POST[self::$registerName])) {
 			return $_POST[self::$registerName];
 		} else {

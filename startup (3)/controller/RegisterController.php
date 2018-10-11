@@ -9,11 +9,12 @@ class RegisterController {
 
     public function __construct(\view\RegisterView $rv, \model\RegisterUserToDb $rudb) {
         $this->registerView = $rv;
-        $this->regusterUserDb = $rudb;
+        $this->registerUserDb = $rudb;
     }
 
     public function registerUser() {
         if($this->registerView->getRequestRegUserName() && $this->registerView->getRequestRegPassword()) {
+           var_dump($this->registerView->getRequestRegUserName());
             $this->registerUserDb->getUserCredentials($this->registerView->getRequestRegUserName(), $this->registerView->getRequestRegPassword());
             $this->registerUserDb->setUpUserToDb();
         }
