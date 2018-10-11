@@ -34,7 +34,7 @@ public function __construct(\model\ConnectToDb $ctdb, \model\Session $s) {
         }
     }
 
-    public function isUserLoggedIn () {
+    public function isUserLoggedIn() {
         return $this->checkUser;
     }
 }
