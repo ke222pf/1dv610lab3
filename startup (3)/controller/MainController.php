@@ -22,7 +22,6 @@ class MainController {
         if(!$this->session->hasSession()) {
             if($this->loginView->getCookieName() && $this->loginView->getCookiePassword()) {
                 $this->loginController->loginWithCookies();
-                // $this->loginView->displayWelcomeBackMessage();
             }
             if($this->loginView->getKeepLoggedInAction()) {
                 $this->loginView->setCookie();
@@ -34,7 +33,6 @@ class MainController {
         }
         if($this->loginView->getLogoutAction()) {
             $this->loginController->logoutUser();
-            // $this->loginView->logoutMessage();
         }
         if($this->registerView->getRegisterUserAction()) {
             $this->registerController->registerUser();

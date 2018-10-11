@@ -29,9 +29,6 @@ class LoginView {
 	}
 	
 	public function renderLoginView($hasSession) {
-		// $this->message = '';
-		// if($hasSession) {
-		// 	$this->message = "";
 		if($this->getCookieName() && $this->getCookiePassword()) {
 			$this->message = "Welcome back with cookie";
 		} else if ($this->isUserLoggedIn && isset($_POST[self::$keep])) {
@@ -42,6 +39,7 @@ class LoginView {
 		$response = $this->generateLogoutButtonHTML();
 		return $response;
 	}
+	
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
