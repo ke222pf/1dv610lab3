@@ -16,4 +16,10 @@ class RegisterUserToDb {
         $this->name = $name;
         $this->password = $password;
     }
+
+    public function setUpUserToDb() {
+        $connect = $this->connectToDb->createConnection();
+        $mySql = "INSERT INTO users(name, password) VALUES (:name, :password)";
+        $setUpUser = $connect->prepare($mySql);
+    }
 }

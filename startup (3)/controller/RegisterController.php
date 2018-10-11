@@ -15,6 +15,7 @@ class RegisterController {
     public function registerUser() {
         if($this->registerView->getRequestRegUserName() && $this->registerView->getRequestRegPassword()) {
             $this->registerUserDb->getUserCredentials($this->registerView->getRequestRegUserName(), $this->registerView->getRequestRegPassword());
+            $this->registerUserDb->setUpUserToDb();
         }
     }
 }
