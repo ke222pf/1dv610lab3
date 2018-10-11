@@ -6,8 +6,10 @@ class loginUser {
 private $name;
 private $password;
 private $connectToDb;
-private $checkUser = null;
+private $checkUser;
 private $session;
+
+const WRONG_CREDENTIALS = "Wrong name or password";
 
 public function __construct(\model\ConnectToDb $ctdb, \model\Session $s) {
     $this->connectToDb = $ctdb;
@@ -30,6 +32,7 @@ public function __construct(\model\ConnectToDb $ctdb, \model\Session $s) {
             $this->session->getSessionName($this->name);
             $this->checkUser = true;
         } else {
+            throw new \Exception(self::WRONG_CREDENTIALS);
             $this->checkUser = false;
         }
     }

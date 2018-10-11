@@ -65,12 +65,15 @@ class LayoutView {
   }
 
   private function generateLink() {
-    if(isset($_GET["register"])) {
-      return '<a href="?">Back to login</a>';
+    if(!$this->session->hasSession()) {
 
-    } else {
-      return '<a href=?register>Register a new user</a>';
-
+      if(isset($_GET["register"])) {
+        return '<a href="?">Back to login</a>';
+        
+      } else {
+        return '<a href=?register>Register a new user</a>';
+        
+      }
     }
   }
 

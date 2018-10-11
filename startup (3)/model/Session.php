@@ -11,6 +11,7 @@ class Session {
             session_start();
         }
     }
+
     public function getSessionName($setSessionName) {
         $this->getSessionName = $setSessionName;
         $_SESSION['username'] = $this->getSessionName;
@@ -21,6 +22,7 @@ class Session {
             return true;
         }
     }
+    
     public function destroySession() {
         unset($_SESSION['username']);
         session_destroy();

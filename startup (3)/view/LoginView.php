@@ -15,14 +15,16 @@ class LoginView {
 
 	private static $messageId = 'LoginView::Message';
 
+	const USERNAME_MISSING = "Username is missing";
+	const PASSWORD_MISSING = "Password is missing";
+
 	private $message = '';
 	private $isUserLoggedIn;
 
 	public function response($isUserLogin) {
-		if(!$this->isUserLoggedIn && !empty($_POST[self::$name]) && !empty($_POST[self::$password])) {
-			$this->message = "Wrong name or password";
-		} else if(!$isUserLogin && $this->getLogoutAction()) {
+		if(!$isUserLogin && $this->getLogoutAction()) {
 			$this->message = "Bye bye!";
+			
 		}
 		$response = $this->generateLoginFormHTML();
 		return $response;
@@ -31,15 +33,16 @@ class LoginView {
 	public function renderLoginView($hasSession) {
 		if($this->getCookieName() && $this->getCookiePassword()) {
 			$this->message = "Welcome back with cookie";
+			
 		} else if ($this->isUserLoggedIn && isset($_POST[self::$keep])) {
 			$this->message = "Welcome and you will be remembered";
+			
 		} else if($this->isUserLoggedIn) {
 			$this->message = "Welcome";
 		}
 		$response = $this->generateLogoutButtonHTML();
 		return $response;
 	}
-	
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -67,7 +70,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $this->message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $this->getRequestUserName() .'" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -85,8 +88,9 @@ class LoginView {
 		if(!empty($_POST[self::$name])) {
 			return $_POST[self::$name];
 		} else {
-			$this->message = "Username is missing";
-			return false;
+			throw new \Exception(self::USERNAME_MISSING);
+			// $this->message = "Username is missing";
+			// return false;
 		}
 	}
 
@@ -94,8 +98,9 @@ class LoginView {
 		if(!empty($_POST[self::$password])) {
 			return $_POST[self::$password];
 		} else {
-			$this->message = "Password is missing";
-			return false;
+			throw new \Exception(self::PASSWORD_MISSING);
+			// $this->message = "Password is missing";
+			// return false;
 		}
 	}
 
@@ -126,5 +131,9 @@ class LoginView {
 
 	public function validateLogin($isUserLoggedIn) {
 		$this->isUserLoggedIn = $isUserLoggedIn;
+	}
+
+	public function validateLoginCredentials($getMessage) {
+		$this->message = $getMessage;
 	}
 }

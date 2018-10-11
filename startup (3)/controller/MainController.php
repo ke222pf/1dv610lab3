@@ -30,12 +30,12 @@ class MainController {
             if($this->loginView->getLoginAction()) {
                 $this->loginController->loginUser();
             } 
+            if($this->registerView->getRegisterUserAction()) {
+                $this->registerController->registerUser();
+            }
         }
         if($this->loginView->getLogoutAction()) {
             $this->loginController->logoutUser();
-        }
-        if($this->registerView->getRegisterUserAction()) {
-            $this->registerController->registerUser();
         }
     
     }
