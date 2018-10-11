@@ -8,12 +8,14 @@ class MainController {
     private $loginController;
     private $session;
     private $registerView;
+    private $registerController;
 
-    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv) {
+    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv, \controller\RegisterController $rc) {
         $this->loginView = $v;
         $this->loginController = $lc;
         $this->session = $s;
         $this->registerView = $rv;
+        $this->registerController = $rc;
     }
     
     public function validateUserAction() {
@@ -35,7 +37,7 @@ class MainController {
             // $this->loginView->logoutMessage();
         }
         if($this->registerView->getRegisterUserAction()) {
-            
+            $this->registerController->registerUser();
         }
     
     }

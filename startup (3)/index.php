@@ -24,8 +24,8 @@ $v = new \view\LoginView();
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView($v, $dtv, $s, $rv);
 $lc = new \controller\LoginController($v, $lu, $lv, $s);
-// $rc = new \controller\RegisterController();
-$mc = new \controller\MainController($v, $lc, $s, $rv);
+$rc = new \controller\RegisterController($rv);
+$mc = new \controller\MainController($v, $lc, $s, $rv, $rc);
 
 $s->startSession();
 
