@@ -7,6 +7,7 @@ class RegisterUserToDb {
     private $connectToDb;
     private $name;
     private $password;
+    private $checkRegister = null;
 
     public function __construct(\model\ConnectToDb $ctdb) {
         $this->connectToDb = $ctdb;
@@ -29,5 +30,8 @@ class RegisterUserToDb {
         } else {
             $this->checkRegister = false;
         }
+    }
+    public function checkIfRegistered() {
+        return $this->checkRegister;
     }
 }
