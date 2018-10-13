@@ -27,7 +27,7 @@ $ctdb = new \model\ConnectToDb();
 $lu = new \model\LoginUser($ctdb, $s);
 $rudb = new \model\RegisterUserToDb($ctdb);
 
-$rv = new \view\RegisterView();
+$rv = new \view\RegisterView($rudb);
 $v = new \view\LoginView();
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView($v, $dtv, $s, $rv);

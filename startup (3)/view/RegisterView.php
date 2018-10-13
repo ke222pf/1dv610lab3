@@ -1,7 +1,9 @@
 <?php
 
 namespace view;
+
 use Exception;
+
 class RegisterView {
 
     private static $registerMessageId = 'RegisterView::Message';
@@ -12,11 +14,21 @@ class RegisterView {
 
 	private $regMessage = '';
 	private $savedToDb;
+	private $regUserToDb;
 	
 	const REGUSERNAME_MISSING = "Username has too few characters, at least 3 characters." . '<br>';
 	const REGPASSWORD_MISSING = "Password has too few characters, at least 6 characters." . '<br>';
 	const MATCH_PASSWORDS = "Passwords do not match." . '<br>';
+	const USERNAME_LENGTH = 3;
+	const PASSWORD_LENGTH = 6;
+	const USERNAME_INVALID_CHARACTERS = "Username contains invalid characters." . '<br>';
+	const USERNAME_ALREADY_EXIST = "User exists, pick another username." . '<br>';
 
+
+
+	public function __construct(\model\RegisterUserToDb $rudb) {
+		$this->regUserToDb = $rudb;
+	}
 
 	public function renderRegisterView() {
 		if(!empty($_POST)) {
@@ -77,11 +89,11 @@ class RegisterView {
 
 	public function validateUserRegristration() {
 
-		if (strlen($this->getRequestRegUserName()) < 3) {
+		if (strlen($this->getRequestRegUserName()) < self::USERNAME_LENGTH) {
 			$this->regMessage = self::REGUSERNAME_MISSING;
 		}
 
-		if(strlen($this->getRequestRegPasswordConformation()) < 6) {
+		if(strlen($this->getRequestRegPasswordConformation()) < self::PASSWORD_LENGTH) {
 			$this->regMessage .= self::REGPASSWORD_MISSING;
 		}
 
@@ -90,9 +102,14 @@ class RegisterView {
 		}
 
         if(preg_match('/[^A-Za-z0-9.#\\-$]/', $this->getRequestRegUserName())) {
-			$this->regMessage .= "Username contains invalid characters." . '<br>';
+			$this->regMessage .= self::USERNAME_INVALID_CHARACTERS;
 			$this->checkForInvalidCharacters();
 		}
+
+		if($this->regUserToDb->checkIfAlreadyExistingUser()) {
+			$this->regMessage .= self::USERNAME_ALREADY_EXIST;
+		}
+		
 		return $this->regMessage;
 	}
 	
@@ -120,4 +137,11 @@ class RegisterView {
 	public function getIfRegistered ($savedToDb) {
 		return $this->savedToDb = $savedToDb;
 	}
+
+	// public function checkIfUserExistInDb () {
+	// 	// var_dump($checkIfUserExist);
+	// 	if($this->regUserToDb->checkIfAlreadyExistingUser()) {
+	// 		$this->regMessage = "User exists, pick another username." . '<br>';
+	// 	}
+	// }
 }

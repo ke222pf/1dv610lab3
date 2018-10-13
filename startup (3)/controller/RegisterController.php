@@ -14,14 +14,13 @@ class RegisterController {
     }
 
     public function registerUser() {
-        // try {
-            if($this->registerView->getRequestRegUserName() && $this->registerView->getRequestRegPassword()) {
-                $this->registerUserDb->getUserCredentials($this->registerView->getRequestRegUserName(), $this->registerView->getRequestRegPassword());
+        if($this->registerView->getRequestRegUserName() && $this->registerView->getRequestRegPassword()) {
+
+            $this->registerUserDb->getUserCredentials($this->registerView->getRequestRegUserName(), $this->registerView->getRequestRegPassword());
+            if($this->registerUserDb->checkIfAlreadyExistingUser() == true) {
                 $this->registerUserDb->setUpUserToDb();
                 $this->registerView->getIfRegistered($this->registerUserDb->checkIfRegistered());
-                // $this->registerView->validateRegCredentials($e->getMessage());
             }
-        // } catch(Exception $e) {
-        // }
+            }
     }
 }
