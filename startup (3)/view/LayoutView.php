@@ -9,12 +9,14 @@ class LayoutView {
   private $isLoggedIn;
   private $session;
   private $registerView;
+  private $gameView;
   
-  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv, \model\Session $s, \view\RegisterView $rv) {
+  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv, \model\Session $s, \view\RegisterView $rv, \view\GameView $gv) {
     $this->loginView = $lv;
     $this->serverTime = $dtv;
     $this->session = $s;
     $this->registerView = $rv;
+    $this->gameView = $gv;
 
   }
   
@@ -52,14 +54,13 @@ class LayoutView {
   }
 
   private function renderView() {
-    if($this->session->hasSession()) {
+    if(isset($_POST['LoginView::StartGame'])){
+      return $this->gameView->render();
+    } else if($this->session->hasSession()) {
       return $this->loginView->renderLoginView($this->session->hasSession());
 
     } else if(isset($_GET['register'])) {
       return $this->registerView->renderRegisterView();
-
-    } else if (isset($_POST['LoginView::StartGame'])){
-      echo "hej från layoutview";
 
     } else if(!$this->session->hasSession()) {
       return $this->loginView->response($this->session->hasSession());

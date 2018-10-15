@@ -4,20 +4,29 @@ namespace view;
 
 class GameView {
 
-    const ALPHABET = 26;
 
     public function render() {
-        return $this->generateGameFormHTML();
+        $respone = $this->generateGameHTML();
+        return $respone;
     }
-    public function generateGameFormHTML() {
-        return '
-        <form method="POST">
 
-        </form>
+    private function generateGameHTML() {
+        return '
+        ' . $this->generateAlphabetForm() . '
         ';
     }
-    public function generateAlphabet () {
-        for ($i = 1; $i < self::NUMBER_OF_LETTER_IN_ALPHABET; $i++) { 
+    private function generateAlphabetForm () {
+        $alphabet = range('a', 'z');
+        $buttons = '';
+        foreach ($alphabet as $letter) {
+            $buttons .= '
+            <p>
+            <form method="POST">
+            <button class="button" type="submit" name="letters" value= "'. $letter .'"> '. $letter.'</button>
+            </form>
+            </p>
+            ';
         }
+        return $buttons;
     }
 }

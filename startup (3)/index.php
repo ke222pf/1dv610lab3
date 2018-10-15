@@ -35,7 +35,7 @@ $gv = new \view\GameView();
 $rv = new \view\RegisterView($rudb);
 $v = new \view\LoginView();
 $dtv = new \view\DateTimeView();
-$lv = new \view\LayoutView($v, $dtv, $s, $rv);
+$lv = new \view\LayoutView($v, $dtv, $s, $rv, $gv);
 
 $gc = new \controller\GameController($gv, $rtf);
 $rc = new \controller\RegisterController($rv, $rudb);
