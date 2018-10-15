@@ -60,7 +60,7 @@ class LoginView {
 		return '
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $this->message .'</p>
-				<input type="submit" name"'. self::$startGame .'" value="Start Game" />
+				<input type="submit" name="'. self::$startGame .'" value="Start Game" />
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
 		';
@@ -134,12 +134,12 @@ class LoginView {
 		return isset($_POST[self::$keep]);
 	}
 
+	public function getStartGameAction() {
+		return isset($_POST[self::$startGame]);
+	}
+	
 	public function validateLogin($isUserLoggedIn) {
 		$this->isUserLoggedIn = $isUserLoggedIn;
-	}
-
-	public function StartGame() {
-		return isset($_POST[self::$startGame]);
 	}
 
 	public function validateLoginCredentials($getMessage) {

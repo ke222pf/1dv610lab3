@@ -17,6 +17,7 @@ class MainController {
         $this->session = $s;
         $this->registerView = $rv;
         $this->registerController = $rc;
+        $this->gameController = $gc;
     }
     
     public function validateUserAction() {
@@ -34,10 +35,11 @@ class MainController {
             if($this->registerView->getRegisterUserAction() && $this->registerView->ifNoErrorMessages()) {
                 $this->registerController->registerUser();
             }
-            if($this->loginView->startGame()) {
-                $this->gameController->initializeGame();
-            }
         }
+        if($this->loginView->getStartGameAction()) {
+            $this->gameController->initializeGame();
+        }
+
         if($this->loginView->getLogoutAction()) {
             $this->loginController->logoutUser();
         }

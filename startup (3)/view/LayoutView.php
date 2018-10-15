@@ -58,6 +58,9 @@ class LayoutView {
     } else if(isset($_GET['register'])) {
       return $this->registerView->renderRegisterView();
 
+    } else if (isset($_POST['LoginView::StartGame'])){
+      echo "hej från layoutview";
+
     } else if(!$this->session->hasSession()) {
       return $this->loginView->response($this->session->hasSession());
 
