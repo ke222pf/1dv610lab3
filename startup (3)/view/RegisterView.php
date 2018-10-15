@@ -137,11 +137,4 @@ class RegisterView {
 	public function getIfRegistered ($savedToDb) {
 		return $this->savedToDb = $savedToDb;
 	}
-
-	// public function checkIfUserExistInDb () {
-	// 	// var_dump($checkIfUserExist);
-	// 	if($this->regUserToDb->checkIfAlreadyExistingUser()) {
-	// 		$this->regMessage = "User exists, pick another username." . '<br>';
-	// 	}
-	// }
 }

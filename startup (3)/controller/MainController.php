@@ -9,8 +9,9 @@ class MainController {
     private $session;
     private $registerView;
     private $registerController;
+    private $gameController;
 
-    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv, \controller\RegisterController $rc) {
+    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv, \controller\RegisterController $rc, \controller\GameController $gc) {
         $this->loginView = $v;
         $this->loginController = $lc;
         $this->session = $s;
@@ -32,6 +33,9 @@ class MainController {
             } 
             if($this->registerView->getRegisterUserAction() && $this->registerView->ifNoErrorMessages()) {
                 $this->registerController->registerUser();
+            }
+            if($this->loginView->startGame()) {
+                $this->gameController->initializeGame();
             }
         }
         if($this->loginView->getLogoutAction()) {

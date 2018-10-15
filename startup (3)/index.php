@@ -9,6 +9,7 @@ require_once('view/RegisterView.php');
 require_once('controller/MainController.php');
 require_once('controller/LoginController.php');
 require_once('controller/RegisterController.php');
+require_once('controller/GameController.php');
 
 require_once('model/ConnectToDb.php');
 require_once('model/LoginUser.php');
@@ -32,9 +33,10 @@ $v = new \view\LoginView();
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView($v, $dtv, $s, $rv);
 
+$gc = new \model\GameController();
 $rc = new \controller\RegisterController($rv, $rudb);
 $lc = new \controller\LoginController($v, $lu, $lv, $s);
-$mc = new \controller\MainController($v, $lc, $s, $rv, $rc);
+$mc = new \controller\MainController($v, $lc, $s, $rv, $rc, $gc);
 
 $s->startSession();
 

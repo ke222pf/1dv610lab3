@@ -9,14 +9,22 @@ class LoginView {
 	private static $name = 'LoginView::UserName';
 	private static $password = 'LoginView::Password';
 
+	private static $startGame = 'LoginView::StartGame';
+
 	private static $cookieName = 'LoginView::CookieName';
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 
 	private static $messageId = 'LoginView::Message';
 
+	//todo implement constat strings in message!
 	const USERNAME_MISSING = "Username is missing";
 	const PASSWORD_MISSING = "Password is missing";
+	const LOGOUT_MESSAGES = "";
+	const LOGIN_WITH_COOKIES = "";
+	const DISPLAY_WELCOME_MESSAGE = "";
+	const REMEMBERED_WITH_COOKIES_MESSAGE = "";
+
 
 	private $message = '';
 	private $isUserLoggedIn;
@@ -52,6 +60,7 @@ class LoginView {
 		return '
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $this->message .'</p>
+				<input type="submit" name"'. self::$startGame .'" value="Start Game" />
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
 		';
@@ -127,6 +136,10 @@ class LoginView {
 
 	public function validateLogin($isUserLoggedIn) {
 		$this->isUserLoggedIn = $isUserLoggedIn;
+	}
+
+	public function StartGame() {
+		return isset($_POST[self::$startGame]);
 	}
 
 	public function validateLoginCredentials($getMessage) {

@@ -28,7 +28,7 @@ public function __construct(\model\ConnectToDb $ctdb, \model\Session $s) {
         $getUsername->bindParam(':name', $this->name);
         $getUsername->execute();
         $matchUser = $getUsername->fetch();
-        if($matchUser && password_verify($this->password, $matchUser['password'])) {
+        if($matchUser && $this->password == $matchUser['password']) {
             $this->session->getSessionName($this->name);
             $this->checkUser = true;
         } else {
