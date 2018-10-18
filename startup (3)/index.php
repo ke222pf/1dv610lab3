@@ -29,7 +29,7 @@ $s = new \model\Session();
 $ctdb = new \model\ConnectToDb();
 $lu = new \model\LoginUser($ctdb, $s);
 $rudb = new \model\RegisterUserToDb($ctdb);
-$rtf = new \model\ReadTextFile();
+$rtf = new \model\ReadTextFile($s);
 
 $gv = new \view\GameView();
 $rv = new \view\RegisterView($rudb);
@@ -37,7 +37,7 @@ $v = new \view\LoginView();
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView($v, $dtv, $s, $rv, $gv);
 
-$gc = new \controller\GameController($gv, $rtf);
+$gc = new \controller\GameController($gv, $rtf, $s);
 $rc = new \controller\RegisterController($rv, $rudb);
 $lc = new \controller\LoginController($v, $lu, $lv, $s);
 $mc = new \controller\MainController($v, $lc, $s, $rv, $rc, $gc);
@@ -45,5 +45,6 @@ $mc = new \controller\MainController($v, $lc, $s, $rv, $rc, $gc);
 $s->startSession();
 
 $mc->validateUserAction();
+$gc->initializeGame();
 $lv->render();
 

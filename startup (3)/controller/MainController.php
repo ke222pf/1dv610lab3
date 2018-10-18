@@ -37,9 +37,9 @@ class MainController {
             }
         }
         if($this->loginView->getStartGameAction()) {
+            $this->session->gameSession();
             $this->gameController->initializeGame();
         }
-
         if($this->loginView->getLogoutAction()) {
             $this->loginController->logoutUser();
         }

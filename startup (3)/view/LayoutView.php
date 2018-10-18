@@ -25,6 +25,7 @@ class LayoutView {
       <html>
         <head>
           <meta charset="utf-8">
+          <link rel="stylesheet" type="text/css" href="style.css">
           <title>Login Example</title>
         </head>
         <body>
@@ -54,7 +55,7 @@ class LayoutView {
   }
 
   private function renderView() {
-    if(isset($_POST['LoginView::StartGame'])){
+    if($this->session->hasGameSession()) {
       return $this->gameView->render();
     } else if($this->session->hasSession()) {
       return $this->loginView->renderLoginView($this->session->hasSession());

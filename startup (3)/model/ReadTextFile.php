@@ -6,7 +6,11 @@ namespace model;
 class ReadTextFile {
 
     private $words_array = array();
-    
+    private $session;
+    public function __construct(\model\Session $s) {
+        $this->session = $s;
+    }
+    //todo: implement so the same word doesnt repeat itself!
     public function readFromTextFile () {
         $fh = fopen('WordsForHangMan.txt','r');
         while ($line = fgets($fh)) {
