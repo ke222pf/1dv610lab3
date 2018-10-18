@@ -22,6 +22,7 @@ class GameView {
         </form>
         ';
     }
+
     private function generateAlphabetForm () {
         $alphabet = range('a', 'z');
         $buttons = '';
@@ -34,9 +35,9 @@ class GameView {
         }
         return $buttons;
     }
+
     public function getGuessedLetter() {
         if(isset($_POST['guessed'])) {
-            // var_dump($_POST['guessed']);
             return $_POST['guessed'];
         } else {
             return "";
@@ -60,6 +61,7 @@ class GameView {
         }
         return $secretWord;
     }
+
     public function getword($secretWord) {
         $this->secretWord = $secretWord;
     }

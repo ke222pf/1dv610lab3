@@ -5,6 +5,7 @@ namespace model;
 class Session {
 
     private $getSessionName;
+    private $lastGuessedLetter;
 
     public function startSession () {
         if(!isset($_SESSION)) {
@@ -21,8 +22,23 @@ class Session {
     }
 
     public function guessedLetterSession($lastGuessedLetter) {
-        $_SESSION['guessedLetters'] .= $lastGuessedLetter;
+        $this->lastGuessedLetter = $lastGuessedLetter;
+        $_SESSION['guessedLetters'] .= $this->lastGuessedLetter;
         // var_dump($_SESSION['guessedLetters']);
+    }
+    public function getLastGuess() {
+        return  $this->lastGuessedLetter;
+    }
+
+    public function saveHangManWord($randomizedWord) {
+        echo "2" . " " . $randomizedWord;
+        $_SESSION['word'] = $randomizedWord;
+        
+    }
+
+    public function getHangManWord() {
+        echo "3" . " " .$_SESSION['word'];
+        return $_SESSION['word'];
     }
 
     public function hasSession() {
@@ -38,8 +54,7 @@ class Session {
     }
 
     public function isSessionGameEmpty () {
-        if(empty($_SESSION['guessedLetters'])) {
-            echo "byt ord";
+        if(strlen($_SESSION['guessedLetters']) < 1) {
             return true;
         }
     }
@@ -52,5 +67,6 @@ class Session {
     public function destroyGameSession() {
         unset($_SESSION['activeGame']);
         unset($_SESSION['guessedLetters']);
+        unset($_SESSION['word']);
     }
 }

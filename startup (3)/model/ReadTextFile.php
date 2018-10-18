@@ -20,7 +20,10 @@ class ReadTextFile {
         // rand(0, count($items) - 1)
     }
     function randomWord() {
-        $randomizedWord = $this->words_array[array_rand($this->words_array)];
-        return $randomizedWord;
+        if($this->session->isSessionGameEmpty()) {
+            $randomizedWord = $this->words_array[array_rand($this->words_array)];
+            echo "1" . " " .$randomizedWord;
+        return $this->session->saveHangManWord($randomizedWord);
+        }
     }
 }
