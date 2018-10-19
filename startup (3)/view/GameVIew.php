@@ -10,6 +10,12 @@ class GameView {
     private $secretWord;
     private $index;
     private $allUsersGuesses;
+    private $renderHangManView;
+    private $wrongGuesses;
+
+    public function __construct(\view\RenderHangManView $rhmv) {
+        $this->renderHangManView = $rhmv;
+    }
 
     public function render() {
         $respone = $this->generateGameHTML();
@@ -19,9 +25,16 @@ class GameView {
     private function generateGameHTML() {
         return '
         <form method="POST">
+        <div class="hangman">
+        '. $this->renderHangView() .'
+        </div>
+        <div class="myLetters"> 
         '. $this->howManyGuesses() .'
+        </div>
         ' . $this->generateAlphabetForm() . '
+        <div class="quitGame">
         <input type="submit" name="' . self::$quitGame . '" value="Quit Game"/>
+        </div>
         </form>
         ';
     }
@@ -64,19 +77,49 @@ class GameView {
                     $char = $allGuesses[$x];
                 }
             }
-            echo $this->index;
             if($i == $this->index && $this->index != null) {
                 $char = $this->getGuessedLetter();
                 
             }
         $secretWord .= '
         <ul id="my-word">
-        <li>'. $char .'</li>
+        <h1><li>'. $char .'</li></h1>
         </ul>
         ';
         }
         return $secretWord;
     }
+
+    public function setWrongGuesses($wrongGuesses) {
+        $this->wrongGuesses = $wrongGuesses;
+    }
+    public function renderHangView() {
+        echo "from render view" . " " .  $this->wrongGuesses;
+        switch($this->wrongGuesses) {
+            case 1:
+             return $this->renderHangManView->failedFirstGuess();
+            break;
+            case 2:
+            return $this->renderHangManView->failedSecondGuess();
+            break;
+            case 3:
+            return $this->renderHangManView->failedThirdGuess();
+            break;
+            case 4:
+            return $this->renderHangManView->failedFourthGuess();
+            break;
+            case 5:
+            return $this->renderHangManView->failedFifthGuess();
+            break;
+            case 6:
+            return $this->renderHangManView->failedSixthGuess();
+        break;
+        }
+    }
+
+    // public function endGame() {
+    //     echo "END GAME";
+    // }
 
     public function getword($secretWord) {
         $this->secretWord = $secretWord;

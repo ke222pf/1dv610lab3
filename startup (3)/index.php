@@ -6,6 +6,7 @@ require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
 require_once('view/RegisterView.php');
 require_once('view/GameView.php');
+require_once('view/RenderHangManView.php');
 
 require_once('controller/MainController.php');
 require_once('controller/LoginController.php');
@@ -32,7 +33,8 @@ $lu = new \model\LoginUser($ctdb, $s);
 $rudb = new \model\RegisterUserToDb($ctdb);
 $rtf = new \model\ReadTextFile($s);
 
-$gv = new \view\GameView();
+$rgmv = new \view\RenderHangManView();
+$gv = new \view\GameView($rgmv);
 $rv = new \view\RegisterView($rudb);
 $v = new \view\LoginView($lu);
 $dtv = new \view\DateTimeView();

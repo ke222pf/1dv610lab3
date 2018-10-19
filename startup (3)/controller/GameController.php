@@ -24,6 +24,7 @@ class GameController {
             $this->setSession->guessedLetterSession($this->gameView->getGuessedLetter());
             $this->gameView->getPositionOnGuess($this->hangMan->matchLetter());
             $this->gameView->getAllGuesses($this->setSession->AllGuessedLetters());
+            $this->gameView->setWrongGuesses($this->setSession->getWrongGuesses());
             $this->gameView->howManyGuesses();
             $this->quitGame();
         }

@@ -18,7 +18,7 @@
   #alphabet {
     margin:15px auto;
     padding:  0;
-    max-width: 900px;
+    /* max-width: 900px; */
   }
   
   #alphabet li {
@@ -29,6 +29,17 @@
     height:30px;
     padding-top:10px;
     background: white;
-    cursor:pointer;
     border: solid 1px white;
   }
+
+.myLetters {
+    margin-left: 35%;
+    display: inline-block;
+}
+.quitGame {
+    padding-top: 60px;
+    margin-bottom: 70px;
+}
+.hangman {
+    margin-left: 40%;
+}

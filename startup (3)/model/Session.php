@@ -18,14 +18,15 @@ class Session {
         $_SESSION['username'] = $this->getSessionName;
     }
     public function gameSession() {
+        if(!isset($_SESSION['wrongGuesses'])) {
+            $_SESSION['wrongGuesses'] = 0;
+        }
         $_SESSION['activeGame'] = true;
     }
 
     public function guessedLetterSession($lastGuessedLetter) {
             $this->lastGuessedLetter = $lastGuessedLetter;
             $_SESSION['guessedLetters'] .= $this->lastGuessedLetter;
-            var_dump($_SESSION['guessedLetters']);
-            // var_dump($_SESSION['guessedLetters']);
     }
 
     public function AllGuessedLetters() {
@@ -37,13 +38,11 @@ class Session {
     }
 
     public function saveHangManWord($randomizedWord) {
-        echo "2" . " " . $randomizedWord;
         $_SESSION['word'] = $randomizedWord;
         
     }
 
     public function getHangManWord() {
-        echo "3" . " " .$_SESSION['word'];
         return $_SESSION['word'];
     }
 
@@ -65,6 +64,16 @@ class Session {
         }
     }
 
+    public function setWrongGuesses() {
+        $numberOfWrongGuesses = $_SESSION['wrongGuesses'];
+        ++$numberOfWrongGuesses;
+        $_SESSION['wrongGuesses'] = $numberOfWrongGuesses;
+    }
+
+    public function getWrongGuesses() {
+        return $_SESSION['wrongGuesses'];
+    }
+
     public function destroySession() {
         unset($_SESSION['username']);
         session_destroy();
@@ -72,6 +81,7 @@ class Session {
 
     public function destroyGameSession() {
         unset($_SESSION['activeGame']);
+        unset($_SESSION['wrongGuesses']);
         unset($_SESSION['guessedLetters']);
         unset($_SESSION['word']);
     }
