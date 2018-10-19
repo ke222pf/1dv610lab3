@@ -1,6 +1,7 @@
 <?php
 
 namespace controller;
+
 use Exception;
 
 class RegisterController {
@@ -17,7 +18,7 @@ class RegisterController {
         if($this->registerView->getRequestRegUserName() && $this->registerView->getRequestRegPassword()) {
 
             $this->registerUserDb->getUserCredentials($this->registerView->getRequestRegUserName(), $this->registerView->getRequestRegPassword());
-            if($this->registerUserDb->checkIfAlreadyExistingUser() == true) {
+            if($this->registerUserDb->checkIfAlreadyExistingUser() == false) {
                 $this->registerUserDb->setUpUserToDb();
                 $this->registerView->getIfRegistered($this->registerUserDb->checkIfRegistered());
             }

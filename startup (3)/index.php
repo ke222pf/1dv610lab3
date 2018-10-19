@@ -34,7 +34,7 @@ $rtf = new \model\ReadTextFile($s);
 
 $gv = new \view\GameView();
 $rv = new \view\RegisterView($rudb);
-$v = new \view\LoginView();
+$v = new \view\LoginView($lu);
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView($v, $dtv, $s, $rv, $gv);
 

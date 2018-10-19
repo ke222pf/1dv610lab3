@@ -29,7 +29,7 @@ class MainController {
                 $this->loginView->setCookie();
                 $this->loginController->loginUser();
             } 
-            if($this->loginView->getLoginAction()) {
+            if($this->loginView->getLoginAction() && $this->loginView->ifNoErrorMessages()) {
                 $this->loginController->loginUser();
             } 
             if($this->registerView->getRegisterUserAction() && $this->registerView->ifNoErrorMessages()) {

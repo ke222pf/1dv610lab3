@@ -3,6 +3,7 @@
 namespace controller;
 
 use Exception;
+
 class LoginController {
 
     private $loginView;
@@ -18,16 +19,16 @@ class LoginController {
     }
     
     public function loginUser() {
-        try {
+        // try {
         if($this->loginView->getRequestUserName() && $this->loginView->getRequestPassword()) {
                 $this->loginUser->getCredentials($this->loginView->getRequestUserName(), $this->loginView->getRequestPassword());
                 $this->loginUser->matchLogin();
                 $this->loginView->validateLogin($this->loginUser->isUserLoggedIn());
-                
+                // var_dump($this->loginUser->isUserLoggedIn());
             }
-        } catch(Exception $e) {
-            $this->loginView->validateLoginCredentials($e->getMessage());
-        }
+        // } catch(Exception $e) {
+        //     $this->loginView->getErrorMessage($e->getMessage());
+        // }
     }
 
     public function logoutUser() {

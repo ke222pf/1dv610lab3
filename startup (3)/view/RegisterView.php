@@ -107,7 +107,11 @@ class RegisterView {
 		}
 
 		if($this->regUserToDb->checkIfAlreadyExistingUser()) {
-			$this->regMessage .= self::USERNAME_ALREADY_EXIST;
+			$this->regMessage = self::USERNAME_ALREADY_EXIST;
+			// var_dump($this->regUserToDb->checkIfAlreadyExistingUser());
+		} 
+		if ($this->regUserToDb->checkIfRegistered()){
+			$this->regMessage = "Registered new User";
 		}
 		
 		return $this->regMessage;

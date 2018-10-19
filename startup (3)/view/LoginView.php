@@ -24,6 +24,7 @@ class LoginView {
 	const LOGIN_WITH_COOKIES = "";
 	const DISPLAY_WELCOME_MESSAGE = "";
 	const REMEMBERED_WITH_COOKIES_MESSAGE = "";
+	const WRONG_CREDENTIALS = "Wrong name or password";
 
 
 	private $message = '';
@@ -79,7 +80,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $this->message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $this->getRequestUserName() .'" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -92,20 +93,16 @@ class LoginView {
 			</form>
 		';
 	}
-	
+
 	public function getRequestUserName() {
-		if(!empty($_POST[self::$name])) {
+		if(isset($_POST[self::$name])) {
 			return $_POST[self::$name];
-		} else {
-			throw new \Exception(self::USERNAME_MISSING);
 		}
 	}
 
 	public function getRequestPassword() {
-		if(!empty($_POST[self::$password])) {
+		if(isset($_POST[self::$password])) {
 			return $_POST[self::$password];
-		} else {
-			throw new \Exception(self::PASSWORD_MISSING);
 		}
 	}
 
@@ -138,11 +135,31 @@ class LoginView {
 		return isset($_POST[self::$startGame]);
 	}
 	
-	public function validateLogin($isUserLoggedIn) {
-		$this->isUserLoggedIn = $isUserLoggedIn;
+
+	public function validateLoginCredentials() {
+		if(empty($this->getRequestUserName())) {
+			$this->message = self::USERNAME_MISSING;
+			
+		} else if(empty($this->getRequestPassword())) {
+			$this->message = self::PASSWORD_MISSING;
+		}
+		return $this->message;
 	}
 
-	public function validateLoginCredentials($getMessage) {
+	public function validateLogin($isUserLoggedIn) {
+		$this->isUserLoggedIn = $isUserLoggedIn;
+		if($this->isUserLoggedIn == false) {
+			$this->message = self::WRONG_CREDENTIALS;
+		}
+	}
+
+	public function ifNoErrorMessages () {
+		if(empty($this->validateLoginCredentials())) {
+			return true;
+		}
+	}
+
+	public function getErrorMessage($getMessage) {
 		$this->message = $getMessage;
 	}
 }

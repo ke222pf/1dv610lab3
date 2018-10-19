@@ -6,7 +6,10 @@ class GameView {
 
     private static $quitGame = 'GameView::quitGame';
 
+
     private $secretWord;
+    private $index;
+    private $allUsersGuesses;
 
     public function render() {
         $respone = $this->generateGameHTML();
@@ -51,11 +54,24 @@ class GameView {
     }
 
     public function howManyGuesses() {
+        $char = '-';
         $secretWord = "";
+        $allGuesses = str_split($this->allUsersGuesses);
         for ($i = 0; $i < strlen($this->secretWord); $i++){
+            $char = '-';
+            for($x = 0; $x < count($allGuesses); $x++) {
+                if($this->secretWord[$i] == $allGuesses[$x]) {
+                    $char = $allGuesses[$x];
+                }
+            }
+            echo $this->index;
+            if($i == $this->index && $this->index != null) {
+                $char = $this->getGuessedLetter();
+                
+            }
         $secretWord .= '
         <ul id="my-word">
-        <li>-</li>
+        <li>'. $char .'</li>
         </ul>
         ';
         }
@@ -64,5 +80,13 @@ class GameView {
 
     public function getword($secretWord) {
         $this->secretWord = $secretWord;
+    }
+    
+    public function getPositionOnGuess($i) {
+        $this->index = $i;
+    }
+
+    public function getAllGuesses($allUsersGuesses) {
+        $this->allUsersGuesses = $allUsersGuesses;
     }
 }

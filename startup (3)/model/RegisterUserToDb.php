@@ -23,7 +23,6 @@ class RegisterUserToDb {
     public function setUpUserToDb() {
         $this->connect = $this->connectToDb->createConnection();
         $mySql = "INSERT INTO users(name, password) VALUES (:name, :password)";
-            //insert query goes here
             $setUpUser = $this->connect->prepare($mySql);
             $hash = password_hash($this->password, PASSWORD_BCRYPT);
             $setUpUser->bindParam(':name', $this->name);
@@ -40,9 +39,9 @@ class RegisterUserToDb {
         $getUsername->execute();
         $ifMatch = $getUsername->fetchColumn();
         if($ifMatch) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
     public function checkIfRegistered() {

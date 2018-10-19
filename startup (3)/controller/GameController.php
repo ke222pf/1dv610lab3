@@ -6,7 +6,6 @@ class GameController {
 
     private $gameView;
     private $getWordFromTextFile;
-    private $gameIsActive;
     private $setSession;
     private $hangMan;
 
@@ -19,14 +18,13 @@ class GameController {
     
     public function initializeGame () {
         if($this->setSession->hasGameSession()) {
-            $this->gameIsActive = true;
             $this->getWordFromTextFile->readFromTextFile();
             $this->getWordFromTextFile->randomWord();
             $this->gameView->getword($this->setSession->getHangManWord());
             $this->setSession->guessedLetterSession($this->gameView->getGuessedLetter());
-            echo $this->gameView->getGuessedLetter();
+            $this->gameView->getPositionOnGuess($this->hangMan->matchLetter());
+            $this->gameView->getAllGuesses($this->setSession->AllGuessedLetters());
             $this->gameView->howManyGuesses();
-            $this->hangMan->matchLetter();
             $this->quitGame();
         }
     }

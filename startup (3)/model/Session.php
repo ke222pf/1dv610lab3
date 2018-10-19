@@ -22,10 +22,16 @@ class Session {
     }
 
     public function guessedLetterSession($lastGuessedLetter) {
-        $this->lastGuessedLetter = $lastGuessedLetter;
-        $_SESSION['guessedLetters'] .= $this->lastGuessedLetter;
-        // var_dump($_SESSION['guessedLetters']);
+            $this->lastGuessedLetter = $lastGuessedLetter;
+            $_SESSION['guessedLetters'] .= $this->lastGuessedLetter;
+            var_dump($_SESSION['guessedLetters']);
+            // var_dump($_SESSION['guessedLetters']);
     }
+
+    public function AllGuessedLetters() {
+        return  $_SESSION['guessedLetters'];
+    }
+
     public function getLastGuess() {
         return  $this->lastGuessedLetter;
     }
@@ -54,7 +60,7 @@ class Session {
     }
 
     public function isSessionGameEmpty () {
-        if(strlen($_SESSION['guessedLetters']) < 1) {
+        if(empty($_SESSION['word'])) {
             return true;
         }
     }

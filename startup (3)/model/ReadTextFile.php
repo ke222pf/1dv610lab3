@@ -17,13 +17,12 @@ class ReadTextFile {
             $this->words_array []= trim($line);
         }
         fclose($fh);
-        // rand(0, count($items) - 1)
     }
     function randomWord() {
         if($this->session->isSessionGameEmpty()) {
             $randomizedWord = $this->words_array[array_rand($this->words_array)];
-            echo "1" . " " .$randomizedWord;
-        return $this->session->saveHangManWord($randomizedWord);
+            echo "1knknknknknknknknknkn" . $randomizedWord;
+            $this->session->saveHangManWord($randomizedWord);
         }
     }
 }
