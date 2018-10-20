@@ -1,14 +1,14 @@
 <?php
 
 namespace model;
-
 class ConnectToDb {
-
+    
     public function createConnection () {
-        $servername = "192.168.64.2";
-        $dbName = "lab3";
-        $username = "karl";
-        $password = "password";
+        include('DataBaseKeys.php');
+        $servername = DB_SERVERNAME;
+        $dbName = DB_DBNAME;
+        $username = DB_NAME;
+        $password = DB_PASS;
         // $servername = "localhost";
         // $dbName = "id7092621_lab2";
         // $username = "id7092621_karl";

@@ -21,7 +21,10 @@ class GameSession {
 
     public function guessedLetterSession($lastGuessedLetter) {
             $this->lastGuessedLetter = $lastGuessedLetter;
+            if(strlen($this->lastGuessedLetter) > 0) {
+                echo $this->lastGuessedLetter;
                 $_SESSION['guessedLetters'] .= $this->lastGuessedLetter;
+            }
     }
 
     public function AllGuessedLetters() {
