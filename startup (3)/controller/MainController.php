@@ -10,14 +10,16 @@ class MainController {
     private $registerView;
     private $registerController;
     private $gameController;
+    private $gameSession;
 
-    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv, \controller\RegisterController $rc, \controller\GameController $gc) {
+    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv, \controller\RegisterController $rc, \controller\GameController $gc, \model\GameSession $gs) {
         $this->loginView = $v;
         $this->loginController = $lc;
         $this->session = $s;
         $this->registerView = $rv;
         $this->registerController = $rc;
         $this->gameController = $gc;
+        $this->gameSession = $gs;
     }
     
     public function validateUserAction() {
@@ -37,7 +39,7 @@ class MainController {
             }
         }
         if($this->loginView->getStartGameAction()) {
-            $this->session->gameSession();
+            $this->gameSession->gameSession();
             $this->gameController->initializeGame();
         }
         if($this->loginView->getLogoutAction()) {

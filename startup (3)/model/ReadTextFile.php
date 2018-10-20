@@ -6,9 +6,9 @@ namespace model;
 class ReadTextFile {
 
     private $words_array = array();
-    private $session;
-    public function __construct(\model\Session $s) {
-        $this->session = $s;
+    private $gameSession;
+    public function __construct(\model\gameSession $gs) {
+        $this->session = $gs;
     }
     //todo: implement so the same word doesnt repeat itself!
     public function readFromTextFile () {
@@ -20,8 +20,7 @@ class ReadTextFile {
     }
     function randomWord() {
         if($this->session->isSessionGameEmpty()) {
-            $randomizedWord = $this->words_array[array_rand($this->words_array)];
-            echo "1knknknknknknknknknkn" . $randomizedWord;
+            $randomizedWord = $this->words_array[array_rand($this->words_array, 1)];
             $this->session->saveHangManWord($randomizedWord);
         }
     }

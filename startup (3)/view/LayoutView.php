@@ -10,13 +10,15 @@ class LayoutView {
   private $session;
   private $registerView;
   private $gameView;
+  private $gameSession;
   
-  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv, \model\Session $s, \view\RegisterView $rv, \view\GameView $gv) {
+  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv, \model\Session $s, \view\RegisterView $rv, \view\GameView $gv, \model\GameSession $gs) {
     $this->loginView = $lv;
     $this->serverTime = $dtv;
     $this->session = $s;
     $this->registerView = $rv;
     $this->gameView = $gv;
+    $this->gameSession = $gs;
 
   }
   
@@ -55,7 +57,7 @@ class LayoutView {
   }
 
   private function renderView() {
-    if($this->session->hasGameSession()) {
+    if($this->gameSession->hasGameSession()) {
       return $this->gameView->render();
     } else if($this->session->hasSession()) {
       return $this->loginView->renderLoginView($this->session->hasSession());
