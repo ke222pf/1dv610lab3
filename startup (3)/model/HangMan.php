@@ -19,6 +19,6 @@ class HangMan {
         } else {
             $this->gameSession->setWrongGuesses();
         }
-    }
+        }
     }
 }
