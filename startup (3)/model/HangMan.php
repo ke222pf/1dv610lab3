@@ -11,15 +11,13 @@ class HangMan {
     }
 
     // validates if the user has guessed correctly
-    public function matchLetter() {
+    public function validateGuessedLetter() {
         $word = $this->gameSession->getHangManWord();
         $latestGuess = $this->gameSession->getLastGuess();
         if ($word && $latestGuess ) {
         if(strpbrk($word, $latestGuess)) {
-            echo "match!";
         } else {
             $this->gameSession->setWrongGuesses();
-            echo "no match!";
         }
     }
     }

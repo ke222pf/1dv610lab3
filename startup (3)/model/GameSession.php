@@ -13,7 +13,7 @@ class GameSession {
     }
 
     // initialize the game session and set wrong guesses to zero.
-    public function gameSession() {
+    public function startGameSession() {
         if(!isset($_SESSION['wrongGuesses'])) {
             $_SESSION['wrongGuesses'] = 0;
         }
@@ -33,17 +33,37 @@ class GameSession {
         }
     }
 
+    // for each guess the a integer increments.
+    public function setWrongGuesses() {
+        $numberOfWrongGuesses = $_SESSION['wrongGuesses'];
+        ++$numberOfWrongGuesses;
+        $_SESSION['wrongGuesses'] = $numberOfWrongGuesses;
+    }
+
+    // if a user has guessed correct stor it in session.
+    public function setCorrectGuess($latestGuess) {
+        $_SESSION['correctGuesses'] = $latestGuess;
+    }
+
     public function getLastGuess() {
         return  $this->lastGuessedLetter;
+    }
+
+    public function getHangManWord() {
+        return $_SESSION['word'];
+    }
+
+    public function getCorrectGuess() {
+        return $_SESSION['correctGuesses'];
+    }
+
+    public function getWrongGuesses() {
+        return $_SESSION['wrongGuesses'];
     }
 
     public function saveHangManWord($randomizedWord) {
         $_SESSION['word'] = $randomizedWord;
         
-    }
-
-    public function getHangManWord() {
-        return $_SESSION['word'];
     }
 
 
@@ -58,27 +78,6 @@ class GameSession {
             return true;
         }
     }
-
-    // for each guess the a integer increments.
-    public function setWrongGuesses() {
-        $numberOfWrongGuesses = $_SESSION['wrongGuesses'];
-        ++$numberOfWrongGuesses;
-        $_SESSION['wrongGuesses'] = $numberOfWrongGuesses;
-    }
-
-    // if a user has guessed correct stor it in session.
-    public function setCorrectGuess($latestGuess) {
-        $_SESSION['correctGuesses'] = $latestGuess;
-    }
-
-    public function getCorrectGuess() {
-        return $_SESSION['correctGuesses'];
-    }
-
-    public function getWrongGuesses() {
-        return $_SESSION['wrongGuesses'];
-    }
-
 
     public function destroyGameSession() {
         unset($_SESSION['activeGame']);

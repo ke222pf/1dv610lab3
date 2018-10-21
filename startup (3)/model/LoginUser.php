@@ -21,7 +21,7 @@ public function __construct(\model\ConnectToDb $ctdb, \model\Session $s) {
     }
 
     // compare users credentils to mysql
-    public function matchLogin() {
+    public function tryLogin() {
         $getConnection = $this->connectToDb->createConnection();
         $getUsername = $getConnection->prepare('SELECT id, name, password FROM users WHERE name=:name');
         $getUsername->bindParam(':name', $this->name);

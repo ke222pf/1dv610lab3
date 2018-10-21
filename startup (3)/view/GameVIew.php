@@ -21,6 +21,7 @@ class GameView {
         $this->renderHangManView = $rhmv;
     }
 
+    // render game.
     public function render() {
         $respone = $this->generateGameHTML();
         return $respone;
@@ -35,9 +36,9 @@ class GameView {
         '. $this->displayFaildTries() .'
         </div>
         <div class="myLetters"> 
-        '. $this->howManyGuesses() .'
+        '. $this->displayCorrectlyGuessedLetters() .'
         </div>
-        ' . $this->generateAlphabetForm() . '
+        ' . $this->generateAlphabet() . '
         <div class="quitGame">
         <input type="submit" name="' . self::$quitGame . '" value="Quit Game"/>
         </div>
@@ -45,8 +46,74 @@ class GameView {
         ';
     }
 
+    private function finishedGame() {
+        if($this->checkIfCorrectWord()) {
+            return '
+            <h1>
+            You Guessed the correct word!
+            </h1>
+            ';
+        }
+    }
+
+    private function maxGuesses() {
+        if($this->wrongGuesses == self::MAXED_GUESSES) {
+              return '
+            <h1>
+           game over!
+            </h1>
+            ';
+        }
+    }
+
+        // when user guesses wrong letter, display difrent fail views.
+        public function displayFaildTries() {
+            switch($this->wrongGuesses) {
+                case 1:
+                 return $this->renderHangManView->failedFirstGuess();
+                break;
+                case 2:
+                return $this->renderHangManView->failedSecondGuess();
+                break;
+                case 3:
+                return $this->renderHangManView->failedThirdGuess();
+                break;
+                case 4:
+                return $this->renderHangManView->failedFourthGuess();
+                break;
+                case 5:
+                return $this->renderHangManView->failedFifthGuess();
+                break;
+                case 6:
+                return $this->renderHangManView->failedSixthGuess();
+            break;
+            }
+        }
+
+    // for each character in the word display a dash
+    public function displayCorrectlyGuessedLetters() {
+        $char = '-';
+        $secretWord = "";
+        $allGuesses = str_split($this->allUsersGuesses);
+        for ($i = 0; $i < strlen($this->hangManWord); $i++){
+            $char = '-';
+            for($x = 0; $x < count($allGuesses); $x++) {
+                if($this->hangManWord[$i] == $allGuesses[$x]) {
+                    $char = $allGuesses[$x];
+                }
+            }
+            $secretWord .= '
+            <ul id="my-word">
+            <h1><li>'. $char .'</li></h1>
+            </ul>
+            ';
+            $this->setCorrectGuessCharacter($char);
+        }
+        return $secretWord;
+    }
+
     // generate a button for each character in the alphabet
-    private function generateAlphabetForm () {
+    private function generateAlphabet() {
         if(!$this->checkIfCorrectWord() && $this->wrongGuesses < self::MAXED_GUESSES) {
 
             $alphabet = range('a', 'z');
@@ -79,32 +146,6 @@ class GameView {
         }
     }
 
-    // for each character in the word display a dash
-    public function howManyGuesses() {
-        $char = '-';
-        $secretWord = "";
-        $allGuesses = str_split($this->allUsersGuesses);
-        for ($i = 0; $i < strlen($this->hangManWord); $i++){
-            $char = '-';
-            for($x = 0; $x < count($allGuesses); $x++) {
-                if($this->hangManWord[$i] == $allGuesses[$x]) {
-                    $char = $allGuesses[$x];
-                }
-            }
-            $secretWord .= '
-            <ul id="my-word">
-            <h1><li>'. $char .'</li></h1>
-            </ul>
-            ';
-            $this->setCorrectGuess($char);
-        }
-        return $secretWord;
-    }
-
-    public function setCorrectGuess($char) {
-        $this->correctGuess .= $char;
-    }
-
     public function getCorrectGuess() {
         return $this->correctGuess;
     }
@@ -117,65 +158,20 @@ class GameView {
         }
     }
 
-    public function setCorrectWord ($correctGuess) {
+    public function setCorrectGuessCharacter($char) {
+        $this->correctGuess .= $char;
+    }
+
+    public function setCorrectWord($correctGuess) {
         $this->correctGuessedWord = $correctGuess;
     }
 
-    private function finishedGame() {
-        if($this->checkIfCorrectWord()) {
-            return '
-            <h1>
-            You Guessed the correct word!
-            </h1>
-            ';
-        }
-    }
-
-    private function maxGuesses() {
-        if($this->wrongGuesses == self::MAXED_GUESSES) {
-              return '
-            <h1>
-           game over!
-            </h1>
-            ';
-        }
-    }
-
-    public function setWrongGuesses($wrongGuesses) {
+    public function setWrongGuess($wrongGuesses) {
         $this->wrongGuesses = $wrongGuesses;
-    }
-
-
-    // when user guesses wrong letter, display difrent fail views.
-    public function displayFaildTries() {
-        switch($this->wrongGuesses) {
-            case 1:
-             return $this->renderHangManView->failedFirstGuess();
-            break;
-            case 2:
-            return $this->renderHangManView->failedSecondGuess();
-            break;
-            case 3:
-            return $this->renderHangManView->failedThirdGuess();
-            break;
-            case 4:
-            return $this->renderHangManView->failedFourthGuess();
-            break;
-            case 5:
-            return $this->renderHangManView->failedFifthGuess();
-            break;
-            case 6:
-            return $this->renderHangManView->failedSixthGuess();
-        break;
-        }
     }
 
     public function setWord($hangManWord) {
         $this->hangManWord = $hangManWord;
-    }
-    
-    public function setPositionOnGuess($i) {
-        $this->index = $i;
     }
 
     public function setAllGuesses($allUsersGuesses) {

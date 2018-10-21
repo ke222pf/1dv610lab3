@@ -30,6 +30,18 @@ class RegisterView {
 		$this->regUserToDb = $rudb;
 	}
 
+	// render registration form
+	public function renderRegisterView() {
+		if(!empty($_POST)) {
+			$this->validateUserRegristration();
+			$response = $this->generateRegisterFormHTML();
+			return $response;
+		} else {
+			$response = $this->generateRegisterFormHTML();
+			return $response;
+		}
+	}
+
 	private function generateRegisterFormHTML () {
 		return '
 		<form method="post">
@@ -52,17 +64,6 @@ class RegisterView {
 		';
     }
 
-	public function renderRegisterView() {
-		if(!empty($_POST)) {
-			$this->validateUserRegristration();
-			$response = $this->generateRegisterFormHTML();
-			return $response;
-		} else {
-			$response = $this->generateRegisterFormHTML();
-			return $response;
-		}
-	}
-
 	public function getRequestRegUserName() {
 		if(isset($_POST[self::$registerName])) {
 			return $_POST[self::$registerName];
@@ -79,10 +80,6 @@ class RegisterView {
 		if(isset($_POST[self::$registerPasswordRepeat])) {
 			return $_POST[self::$registerPasswordRepeat];
 		}
-	}
-
-	public function getRegisterUserAction () {
-		return isset($_POST[self::$registerUser]);
 	}
 
 	private function validateUserRegristration() {
@@ -115,6 +112,7 @@ class RegisterView {
 		return $this->regMessage;
 	}
 	
+	// check for invalid characters and return the stript name.
     private function checkForInvalidCharacters() {
         if(preg_match('/[^A-Za-z0-9.#\\-$]/', $this->getRequestRegUserName())) {
             $string = strip_tags($this->getRequestRegUserName());
@@ -134,5 +132,9 @@ class RegisterView {
 
 	public function getIfRegistered ($savedToDb) {
 		return $this->savedToDb = $savedToDb;
+	}
+
+	public function getRegisterUserAction () {
+		return isset($_POST[self::$registerUser]);
 	}
 }

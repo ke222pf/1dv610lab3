@@ -13,8 +13,11 @@ class LayoutView {
   private $registerView;
   private $gameView;
   private $gameSession;
+
+  private static $register = 'register';
   
-  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv, \model\Session $s, \view\RegisterView $rv, \view\GameView $gv, \model\GameSession $gs) {
+  public function __construct (\view\LoginView $lv, \view\DateTimeView $dtv, \model\Session $s,
+                               \view\RegisterView $rv, \view\GameView $gv, \model\GameSession $gs) {
     $this->loginView = $lv;
     $this->serverTime = $dtv;
     $this->session = $s;
@@ -46,6 +49,22 @@ class LayoutView {
     ';
   }
   
+    // depending on user action render view.
+    private function renderView() {
+      if($this->gameSession->hasGameSession()) {
+        return $this->gameView->render();
+      } else if($this->session->hasSession()) {
+        return $this->loginView->renderLoggedInView($this->session->hasSession());
+  
+      } else if(isset($_GET[self::$register])) {
+        return $this->registerView->renderRegisterView();
+  
+      } else if(!$this->session->hasSession()) {
+        return $this->loginView->response($this->session->hasSession());
+  
+      }
+    }
+
   private function renderIsLoggedIn() {
     if ($this->session->hasSession()) {
       return '<h2>Logged in</h2>';
@@ -57,26 +76,10 @@ class LayoutView {
     }
   }
 
-  // depending on user action render view.
-  private function renderView() {
-    if($this->gameSession->hasGameSession()) {
-      return $this->gameView->render();
-    } else if($this->session->hasSession()) {
-      return $this->loginView->renderLoggedInView($this->session->hasSession());
-
-    } else if(isset($_GET['register'])) {
-      return $this->registerView->renderRegisterView();
-
-    } else if(!$this->session->hasSession()) {
-      return $this->loginView->response($this->session->hasSession());
-
-    }
-  }
-
   private function generateLink() {
     if(!$this->session->hasSession()) {
 
-      if(isset($_GET["register"])) {
+      if(isset($_GET[self::$register])) {
         return '<a href="?">Back to login</a>';
         
       } else {
@@ -87,7 +90,7 @@ class LayoutView {
   }
 
   private function registerUser() {
-    if(isset($_GET["register"])) {
+    if(isset($_GET[self::$register])) {
       return '<h2> Register new user</h2>';
 
     } else {

@@ -21,7 +21,7 @@ class LoginController {
     public function loginUser() {
         if($this->loginView->getRequestUserName() && $this->loginView->getRequestPassword()) {
                 $this->loginUser->setCredentials($this->loginView->getRequestUserName(), $this->loginView->getRequestPassword());
-                $this->loginUser->matchLogin();
+                $this->loginUser->tryLogin();
                 $this->loginView->validateLogin($this->loginUser->getloggedInStatus());
             }
     }

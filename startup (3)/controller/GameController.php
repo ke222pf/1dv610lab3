@@ -26,14 +26,14 @@ class GameController {
 
             $this->gameSession->guessedLetterSession($this->gameView->getGuessedLetter());
 
-            $this->gameView->setPositionOnGuess($this->hangMan->matchLetter());
+            $this->hangMan->validateGuessedLetter();
             $this->gameView->setAllGuesses($this->gameSession->getAllGuessedLetters());
-            $this->gameView->setWrongGuesses($this->gameSession->getWrongGuesses());
+            $this->gameView->setWrongGuess($this->gameSession->getWrongGuesses());
 
-            $this->gameView->howManyGuesses();
+            $this->gameView->displayCorrectlyGuessedLetters();
             $this->gameSession->setCorrectGuess($this->gameView->getCorrectGuess());
             $this->gameView->setCorrectWord($this->gameSession->getCorrectGuess());
-            
+
             $this->quitGame();
         }
     }
