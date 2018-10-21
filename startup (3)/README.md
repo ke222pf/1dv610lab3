@@ -5,6 +5,10 @@ Interface repository for 1DV608 assignment 2 and 4
 # url to application
 https://karlerelof.000webhostapp.com/
 
+# login credentials to app
+* username: admin
+* password: password
+
 # TODOS
 Test case 2.2 is not implemented.
 fix guessedLetterSession, undefined first time user guesses.
