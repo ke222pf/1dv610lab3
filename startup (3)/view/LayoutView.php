@@ -4,10 +4,12 @@ namespace view;
 
 class LayoutView {
 
-  private $loginView;
+
   private $dtv;
   private $isLoggedIn;
   private $session;
+
+  private $loginView;
   private $registerView;
   private $gameView;
   private $gameSession;
@@ -37,7 +39,6 @@ class LayoutView {
           ' . $this->registerUser() . '
           <div class="container">
               ' . $this->renderView() . '
-              
               ' . $this->serverTime->show() . '
           </div>
          </body>
@@ -56,11 +57,12 @@ class LayoutView {
     }
   }
 
+  // depending on user action render view.
   private function renderView() {
     if($this->gameSession->hasGameSession()) {
       return $this->gameView->render();
     } else if($this->session->hasSession()) {
-      return $this->loginView->renderLoginView($this->session->hasSession());
+      return $this->loginView->renderLoggedInView($this->session->hasSession());
 
     } else if(isset($_GET['register'])) {
       return $this->registerView->renderRegisterView();

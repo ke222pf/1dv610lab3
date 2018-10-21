@@ -19,16 +19,11 @@ class LoginController {
     }
     
     public function loginUser() {
-        // try {
         if($this->loginView->getRequestUserName() && $this->loginView->getRequestPassword()) {
-                $this->loginUser->getCredentials($this->loginView->getRequestUserName(), $this->loginView->getRequestPassword());
+                $this->loginUser->setCredentials($this->loginView->getRequestUserName(), $this->loginView->getRequestPassword());
                 $this->loginUser->matchLogin();
-                $this->loginView->validateLogin($this->loginUser->isUserLoggedIn());
-                // var_dump($this->loginUser->isUserLoggedIn());
+                $this->loginView->validateLogin($this->loginUser->getloggedInStatus());
             }
-        // } catch(Exception $e) {
-        //     $this->loginView->getErrorMessage($e->getMessage());
-        // }
     }
 
     public function logoutUser() {
@@ -36,6 +31,6 @@ class LoginController {
     }
 
     public function loginWithCookies() {
-        $this->loginUser->getCredentials($this->loginView->getCookieName(), $this->loginView->getCookiePassword());
+        $this->loginUser->setCredentials($this->loginView->getCookieName(), $this->loginView->getCookiePassword());
     }
 }

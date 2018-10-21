@@ -3,7 +3,7 @@
 namespace view;
 
 class RenderHangManView {
-    // private $hang = array();
+
     const BLANK_SPACES = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
 
     public function failedFirstGuess() {

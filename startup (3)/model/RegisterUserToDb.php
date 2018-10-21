@@ -9,7 +9,6 @@ class RegisterUserToDb {
     private $password;
     private $checkRegister = null;
     private $connect;
-    // private $checkRegExist = false;
 
     public function __construct(\model\ConnectToDb $ctdb) {
         $this->connectToDb = $ctdb;
@@ -20,6 +19,7 @@ class RegisterUserToDb {
         $this->password = $password;
     }
 
+    // insert users credentials to mysql.
     public function setUpUserToDb() {
         $this->connect = $this->connectToDb->createConnection();
         $mySql = "INSERT INTO users(name, password) VALUES (:name, :password)";
@@ -33,6 +33,8 @@ class RegisterUserToDb {
                 $this->checkRegister = false;
             }
     }
+
+
     public function checkIfAlreadyExistingUser() {
         $getUsername = $this->connectToDb->createConnection()->prepare('SELECT id, name, password FROM users WHERE name=:name');
         $getUsername->bindParam(':name', $this->name);
@@ -44,6 +46,8 @@ class RegisterUserToDb {
             return false;
         }
     }
+
+    
     public function checkIfRegistered() {
         return $this->checkRegister;
     }

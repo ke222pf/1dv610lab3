@@ -17,46 +17,20 @@ class LoginView {
 
 	private static $messageId = 'LoginView::Message';
 
-	//todo implement constat strings in message!
 	const USERNAME_MISSING = "Username is missing";
 	const PASSWORD_MISSING = "Password is missing";
-	const LOGOUT_MESSAGES = "";
-	const LOGIN_WITH_COOKIES = "";
-	const DISPLAY_WELCOME_MESSAGE = "";
-	const REMEMBERED_WITH_COOKIES_MESSAGE = "";
+	const LOGOUT_MESSAGES = "Bye bye!";
+	const LOGIN_WITH_COOKIES = "Welcome back with cookie";
+	const DISPLAY_WELCOME_MESSAGE = "Welcome";
+	const REMEMBERED_WITH_COOKIES_MESSAGE = "Welcome and you will be remembered";
 	const WRONG_CREDENTIALS = "Wrong name or password";
 
 
 	private $message = '';
 	private $isUserLoggedIn;
 
-	public function response($isUserLogin) {
-		if(!$isUserLogin && $this->getLogoutAction()) {
-			$this->message = "Bye bye!";
-			
-		}
-		$response = $this->generateLoginFormHTML();
-		return $response;
-	}
-	
-	public function renderLoginView($hasSession) {
-		if($this->getCookieName() && $this->getCookiePassword()) {
-			$this->message = "Welcome back with cookie";
-			
-		} else if ($this->isUserLoggedIn && isset($_POST[self::$keep])) {
-			$this->message = "Welcome and you will be remembered";
-			
-		} else if($this->isUserLoggedIn) {
-			$this->message = "Welcome";
-		}
-		$response = $this->generateLogoutButtonHTML();
-		return $response;
-	}
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
+
+	// Generate HTML code on the output buffer for the logout button
 	private function generateLogoutButtonHTML() {
 		return '
 			<form  method="post" >
@@ -67,11 +41,7 @@ class LoginView {
 		';
 	}
 	
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
+	// Generate HTML code on the output buffer for the logout button
 	private function generateLoginFormHTML() {
 		return '
 			<form method="post" > 
@@ -92,6 +62,30 @@ class LoginView {
 				</fieldset>
 			</form>
 		';
+	}
+
+	// return landing page
+	public function response($isUserLogin) {
+		if(!$isUserLogin && $this->getLogoutAction()) {
+			$this->message = self::LOGOUT_MESSAGES;
+			
+		}
+		$response = $this->generateLoginFormHTML();
+		return $response;
+	}
+	
+	public function renderLoggedInView($hasSession) {
+		if($this->getCookieName() && $this->getCookiePassword()) {
+			$this->message = self::LOGIN_WITH_COOKIES;
+			
+		} else if ($this->isUserLoggedIn && isset($_POST[self::$keep])) {
+			$this->message = self::REMEMBERED_WITH_COOKIES_MESSAGE;
+			
+		} else if($this->isUserLoggedIn) {
+			$this->message = self::DISPLAY_WELCOME_MESSAGE;
+		}
+		$response = $this->generateLogoutButtonHTML();
+		return $response;
 	}
 
 	public function getRequestUserName() {
@@ -135,7 +129,6 @@ class LoginView {
 		return isset($_POST[self::$startGame]);
 	}
 	
-
 	public function validateLoginCredentials() {
 		if(empty($this->getRequestUserName())) {
 			$this->message = self::USERNAME_MISSING;
@@ -146,6 +139,7 @@ class LoginView {
 		return $this->message;
 	}
 
+	// checks if user has successfully logged in.
 	public function validateLogin($isUserLoggedIn) {
 		$this->isUserLoggedIn = $isUserLoggedIn;
 		if($this->isUserLoggedIn == false) {

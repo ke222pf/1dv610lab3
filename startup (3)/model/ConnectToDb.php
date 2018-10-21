@@ -1,22 +1,23 @@
 <?php
 
 namespace model;
+
+// hidde variables.
+require_once('DataBaseKeys.php');
+
 class ConnectToDb {
-    
+
+    // sets up a connection to mysql.
     public function createConnection () {
-        include('DataBaseKeys.php');
         $servername = DB_SERVERNAME;
         $dbName = DB_DBNAME;
         $username = DB_NAME;
         $password = DB_PASS;
-        // $servername = "localhost";
-        // $dbName = "id7092621_lab2";
-        // $username = "id7092621_karl";
-        // $password = "123123";
+        
         try {
             return new \PDO("mysql:host=$servername;dbname=$dbName;", $username, $password);
             }
-        catch(PDOException $e)
+        catch(\PDOException $e)
             {
             echo "Connection failed: " . $e->getMessage();
     }

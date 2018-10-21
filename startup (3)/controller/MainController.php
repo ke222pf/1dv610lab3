@@ -12,7 +12,8 @@ class MainController {
     private $gameController;
     private $gameSession;
 
-    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv, \controller\RegisterController $rc, \controller\GameController $gc, \model\GameSession $gs) {
+    public function __construct (\view\LoginView $v, \controller\LoginController $lc, \model\Session $s, \view\RegisterView $rv,
+                                 \controller\RegisterController $rc, \controller\GameController $gc, \model\GameSession $gs) {
         $this->loginView = $v;
         $this->loginController = $lc;
         $this->session = $s;
@@ -22,6 +23,7 @@ class MainController {
         $this->gameSession = $gs;
     }
     
+    // depending on user action direct to the right controller.
     public function validateUserAction() {
         if(!$this->session->hasSession()) {
             if($this->loginView->getCookieName() && $this->loginView->getCookiePassword()) {

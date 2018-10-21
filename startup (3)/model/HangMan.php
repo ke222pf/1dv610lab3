@@ -10,6 +10,7 @@ class HangMan {
         $this->gameSession = $gs;
     }
 
+    // validates if the user has guessed correctly
     public function matchLetter() {
         $word = $this->gameSession->getHangManWord();
         $latestGuess = $this->gameSession->getLastGuess();

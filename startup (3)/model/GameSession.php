@@ -4,7 +4,6 @@ namespace model;
 
 class GameSession {
 
-    private $getSessionName;
     private $lastGuessedLetter;
 
     public function startSession () {
@@ -12,6 +11,8 @@ class GameSession {
             session_start();
         }
     }
+
+    // initialize the game session and set wrong guesses to zero.
     public function gameSession() {
         if(!isset($_SESSION['wrongGuesses'])) {
             $_SESSION['wrongGuesses'] = 0;
@@ -19,15 +20,14 @@ class GameSession {
         $_SESSION['activeGame'] = true;
     }
 
+
     public function guessedLetterSession($lastGuessedLetter) {
-            $this->lastGuessedLetter = $lastGuessedLetter;
-            if(strlen($this->lastGuessedLetter) > 0) {
-                echo $this->lastGuessedLetter;
-                $_SESSION['guessedLetters'] .= $this->lastGuessedLetter;
-            }
+        $this->lastGuessedLetter = $lastGuessedLetter;
+        $_SESSION['guessedLetters'] .= $this->lastGuessedLetter;
     }
 
-    public function AllGuessedLetters() {
+
+    public function getAllGuessedLetters() {
         if(isset($_SESSION['guessedLetters'])) {
             return  $_SESSION['guessedLetters'];
         }
@@ -53,21 +53,22 @@ class GameSession {
         }
     }
 
-    public function isSessionGameEmpty () {
+    public function sessionGameEmpty () {
         if(empty($_SESSION['word'])) {
             return true;
         }
     }
 
+    // for each guess the a integer increments.
     public function setWrongGuesses() {
         $numberOfWrongGuesses = $_SESSION['wrongGuesses'];
         ++$numberOfWrongGuesses;
         $_SESSION['wrongGuesses'] = $numberOfWrongGuesses;
     }
 
+    // if a user has guessed correct stor it in session.
     public function setCorrectGuess($latestGuess) {
         $_SESSION['correctGuesses'] = $latestGuess;
-        echo $_SESSION['correctGuesses'];
     }
 
     public function getCorrectGuess() {

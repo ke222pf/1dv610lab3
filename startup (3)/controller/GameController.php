@@ -21,16 +21,19 @@ class GameController {
 
             $this->getWordFromTextFile->readFromTextFile();
             $this->getWordFromTextFile->randomWord();
-            
-            
-            $this->gameView->getword($this->gameSession->getHangManWord());
+                 
+            $this->gameView->setWord($this->gameSession->getHangManWord());
+
             $this->gameSession->guessedLetterSession($this->gameView->getGuessedLetter());
-            $this->gameView->getPositionOnGuess($this->hangMan->matchLetter());
-            $this->gameView->getAllGuesses($this->gameSession->AllGuessedLetters());
+
+            $this->gameView->setPositionOnGuess($this->hangMan->matchLetter());
+            $this->gameView->setAllGuesses($this->gameSession->getAllGuessedLetters());
             $this->gameView->setWrongGuesses($this->gameSession->getWrongGuesses());
+
             $this->gameView->howManyGuesses();
             $this->gameSession->setCorrectGuess($this->gameView->getCorrectGuess());
             $this->gameView->setCorrectWord($this->gameSession->getCorrectGuess());
+            
             $this->quitGame();
         }
     }

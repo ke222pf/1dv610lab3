@@ -4,7 +4,7 @@ namespace model;
 
 class Session {
 
-    private $getSessionName;
+    private $sessionName;
     private $lastGuessedLetter;
 
     public function startSession () {
@@ -13,9 +13,10 @@ class Session {
         }
     }
 
-    public function getSessionName($setSessionName) {
-        $this->getSessionName = $setSessionName;
-        $_SESSION['username'] = $this->getSessionName;
+    // set users name to session.
+    public function setSessionName($setSessionName) {
+        $this->sessionName = $setSessionName;
+        $_SESSION['username'] = $this->sessionName;
     }
 
 
@@ -24,13 +25,6 @@ class Session {
             return true;
         }
     }
-
-    public function isSessionGameEmpty () {
-        if(empty($_SESSION['word'])) {
-            return true;
-        }
-    }
-
 
     public function destroySession() {
         unset($_SESSION['username']);

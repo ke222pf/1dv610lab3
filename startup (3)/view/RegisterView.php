@@ -30,18 +30,7 @@ class RegisterView {
 		$this->regUserToDb = $rudb;
 	}
 
-	public function renderRegisterView() {
-		if(!empty($_POST)) {
-			$this->validateUserRegristration();
-			$response = $this->generateRegisterFormHTML();
-			return $response;
-		} else {
-			$response = $this->generateRegisterFormHTML();
-			return $response;
-		}
-	}
-
-    private function generateRegisterFormHTML () {
+	private function generateRegisterFormHTML () {
 		return '
 		<form method="post">
         <fieldset>
@@ -63,6 +52,16 @@ class RegisterView {
 		';
     }
 
+	public function renderRegisterView() {
+		if(!empty($_POST)) {
+			$this->validateUserRegristration();
+			$response = $this->generateRegisterFormHTML();
+			return $response;
+		} else {
+			$response = $this->generateRegisterFormHTML();
+			return $response;
+		}
+	}
 
 	public function getRequestRegUserName() {
 		if(isset($_POST[self::$registerName])) {
@@ -77,9 +76,8 @@ class RegisterView {
     }
 
     public function getRequestRegPasswordConformation() {
-		$passwordConf = self::$registerPasswordRepeat;
-		if(isset($_POST[$passwordConf])) {
-			return $_POST[$passwordConf];
+		if(isset($_POST[self::$registerPasswordRepeat])) {
+			return $_POST[self::$registerPasswordRepeat];
 		}
 	}
 
@@ -87,7 +85,7 @@ class RegisterView {
 		return isset($_POST[self::$registerUser]);
 	}
 
-	public function validateUserRegristration() {
+	private function validateUserRegristration() {
 
 		if (strlen($this->getRequestRegUserName()) < self::USERNAME_LENGTH) {
 			$this->regMessage = self::REGUSERNAME_MISSING;
@@ -98,7 +96,7 @@ class RegisterView {
 		}
 
 		if($this->getRequestRegPassword() != $this->getRequestRegPasswordConformation()) {
-			$this->regMessage .= self::MATCH_PASSWORDS;
+			$this->regMessage = self::MATCH_PASSWORDS;
 		}
 
         if(preg_match('/[^A-Za-z0-9.#\\-$]/', $this->getRequestRegUserName())) {
@@ -108,8 +106,8 @@ class RegisterView {
 
 		if($this->regUserToDb->checkIfAlreadyExistingUser()) {
 			$this->regMessage = self::USERNAME_ALREADY_EXIST;
-			// var_dump($this->regUserToDb->checkIfAlreadyExistingUser());
 		} 
+
 		if ($this->regUserToDb->checkIfRegistered()){
 			$this->regMessage = "Registered new User";
 		}
@@ -117,7 +115,7 @@ class RegisterView {
 		return $this->regMessage;
 	}
 	
-    public function checkForInvalidCharacters() {
+    private function checkForInvalidCharacters() {
         if(preg_match('/[^A-Za-z0-9.#\\-$]/', $this->getRequestRegUserName())) {
             $string = strip_tags($this->getRequestRegUserName());
 			return $string;
@@ -132,10 +130,6 @@ class RegisterView {
 		if(empty($this->validateUserRegristration())) {
 			return true;
 		}
-	}
-
-	public function validateRegCredentials($getMessage) {
-		$this->regMessage = $getMessage;
 	}
 
 	public function getIfRegistered ($savedToDb) {

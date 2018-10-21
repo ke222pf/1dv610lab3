@@ -15,6 +15,8 @@ class GameView {
     private $correctGuess;
     private $correctGuessedWord;
 
+    const MAXED_GUESSES = 6;
+
     public function __construct(\view\RenderHangManView $rhmv) {
         $this->renderHangManView = $rhmv;
     }
@@ -30,7 +32,7 @@ class GameView {
         '.  $this->finishedGame() .'
         '. $this->maxGuesses().'
         <div class="hangman">
-        '. $this->renderHangView() .'
+        '. $this->displayFaildTries() .'
         </div>
         <div class="myLetters"> 
         '. $this->howManyGuesses() .'
@@ -43,8 +45,9 @@ class GameView {
         ';
     }
 
+    // generate a button for each character in the alphabet
     private function generateAlphabetForm () {
-        if(!$this->checkIfCorrectWord() && $this->wrongGuesses < 6) {
+        if(!$this->checkIfCorrectWord() && $this->wrongGuesses < self::MAXED_GUESSES) {
 
             $alphabet = range('a', 'z');
             $buttons = '';
@@ -76,6 +79,7 @@ class GameView {
         }
     }
 
+    // for each character in the word display a dash
     public function howManyGuesses() {
         $char = '-';
         $secretWord = "";
@@ -99,14 +103,13 @@ class GameView {
 
     public function setCorrectGuess($char) {
         $this->correctGuess .= $char;
-        // echo $char;
     }
 
     public function getCorrectGuess() {
         return $this->correctGuess;
     }
 
-    public function checkIfCorrectWord() {
+    private function checkIfCorrectWord() {
         if(strpbrk($this->correctGuessedWord, '-')) {
            return false;
         } else {
@@ -118,7 +121,7 @@ class GameView {
         $this->correctGuessedWord = $correctGuess;
     }
 
-    public function finishedGame() {
+    private function finishedGame() {
         if($this->checkIfCorrectWord()) {
             return '
             <h1>
@@ -128,8 +131,8 @@ class GameView {
         }
     }
 
-    public function maxGuesses() {
-        if($this->wrongGuesses == 6) {
+    private function maxGuesses() {
+        if($this->wrongGuesses == self::MAXED_GUESSES) {
               return '
             <h1>
            game over!
@@ -143,7 +146,8 @@ class GameView {
     }
 
 
-    public function renderHangView() {
+    // when user guesses wrong letter, display difrent fail views.
+    public function displayFaildTries() {
         switch($this->wrongGuesses) {
             case 1:
              return $this->renderHangManView->failedFirstGuess();
@@ -166,19 +170,15 @@ class GameView {
         }
     }
 
-    // public function endGame() {
-    //     echo "END GAME";
-    // }
-
-    public function getword($hangManWord) {
+    public function setWord($hangManWord) {
         $this->hangManWord = $hangManWord;
     }
     
-    public function getPositionOnGuess($i) {
+    public function setPositionOnGuess($i) {
         $this->index = $i;
     }
 
-    public function getAllGuesses($allUsersGuesses) {
+    public function setAllGuesses($allUsersGuesses) {
         $this->allUsersGuesses = $allUsersGuesses;
     }
 }

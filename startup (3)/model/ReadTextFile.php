@@ -18,9 +18,11 @@ class ReadTextFile {
         }
         fclose($fh);
     }
+
+
     function randomWord() {
-        if($this->session->isSessionGameEmpty()) {
-            $randomizedWord = $this->words_array[array_rand($this->words_array, 1)];
+        if($this->session->sessionGameEmpty()) {
+            $randomizedWord = $this->words_array[array_rand($this->words_array)];
             $this->session->saveHangManWord($randomizedWord);
         }
     }

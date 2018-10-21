@@ -22,6 +22,6 @@ class RegisterController {
                 $this->registerUserDb->setUpUserToDb();
                 $this->registerView->getIfRegistered($this->registerUserDb->checkIfRegistered());
             }
-            }
+        }
     }
 }
